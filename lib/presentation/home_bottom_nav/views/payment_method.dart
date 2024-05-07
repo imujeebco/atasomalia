@@ -287,6 +287,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                       String? image;
                                       image = "assets/icons/deposit_icon.png";
                                       if (dataController.myRoleId.value == 4) {
+                                        print("Agent Profile");
                                         if (method.name.toString() ==
                                             "Waafi Pay") {
                                           image =
@@ -295,6 +296,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                         }
                                       }
                                       if (dataController.myRoleId.value == 6) {
+                                        print("Customer Profile");
                                         if (method.name.toString() ==
                                             "Deposit") {
                                           return SizedBox.shrink();

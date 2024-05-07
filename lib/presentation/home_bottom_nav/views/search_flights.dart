@@ -77,6 +77,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
   List<String> airlineNames = [];
   int? _selectedOutbound;
   int? _selectedInbound;
+  String? selection;
 
   @override
   void initState() {
@@ -148,6 +149,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                   setState(() {
                     data1!
                         .sort((a, b) => a.totalAmount.compareTo(b.totalAmount));
+                    selection = 'Price (Low to High)';
                   });
                 }
 
@@ -156,6 +158,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                   setState(() {
                     data1!
                         .sort((a, b) => b.totalAmount.compareTo(a.totalAmount));
+                    selection = 'Price (High to Low)';
                   });
                 }
 
@@ -164,6 +167,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                   setState(() {
                     data1!.sort((a, b) =>
                         a.outBound!.duration!.compareTo(b.outBound!.duration));
+                    selection = 'Duration (Low to High)';
                   });
                 }
 
@@ -172,6 +176,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                   setState(() {
                     data1!.sort((a, b) =>
                         b.outBound!.duration!.compareTo(a.outBound!.duration!));
+                    selection = 'Duration (High to Low)';
                   });
                 }
 
@@ -298,6 +303,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                                           Navigator.pop(context);
                                           _showFilterAirline(
                                               "${airlineNames[index]}");
+                                          selection = "${airlineNames[index]}";
                                         },
                                       ),
                                     ],
@@ -337,6 +343,16 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                                     padding: const EdgeInsets.only(left: 10),
                                     child: Row(
                                       children: [
+                                        selection == null
+                                            ? SizedBox.shrink()
+                                            : buildFilterButton(
+                                                text: selection.toString(),
+                                                onPress: () {
+                                                  setState(() {
+                                                    selection = null;
+                                                    _showFilterAirline("a");
+                                                  });
+                                                }),
                                         IconTextButton(
                                             onPress: () {
                                               // Get.to(() => SortScreen());
@@ -359,11 +375,13 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                                             text: 'Low to High',
                                             onPress: () {
                                               sortAscending();
+                                              selection = 'Low to High';
                                             }),
                                         buildButton(
                                             text: 'High to Low',
                                             onPress: () {
                                               sortDescending();
+                                              selection = 'High to Low';
                                             }),
                                       ],
                                     ),
@@ -627,7 +645,7 @@ class _SearchFlightScreenState extends State<SearchFlightScreen> {
                                                                   0.01.ph,
                                                                   CommonText(
                                                                     text:
-                                                                        'IN-BOUND',
+                                                                        'Inbound',
                                                                     fontSize:
                                                                         12.0,
                                                                   )
@@ -1118,6 +1136,38 @@ class buildButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
         child: Text(text),
+      ),
+    );
+  }
+}
+
+class buildFilterButton extends StatelessWidget {
+  final String text;
+  final Function() onPress;
+  const buildFilterButton({
+    super.key,
+    required this.text,
+    required this.onPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: OutlinedButton(
+        onPressed: onPress,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: AppColors.appColorPrimary.withOpacity(0.6),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CommonText(text: "$text", color: AppColors.white),
+            Icon(Icons.cancel, color: AppColors.white),
+          ],
+        ),
       ),
     );
   }

@@ -6,11 +6,9 @@ import 'package:travel_app/app/configs/app_colors.dart';
 import 'package:travel_app/app/configs/app_size_config.dart';
 import 'package:travel_app/app/utils/custom_widgets/common_text.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_textfield.dart';
-import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_tab.dart';
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/one_way_tab.dart';
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/return_tab.dart';
 
-import '../../../app/utils/custom_widgets/custom_toast.dart';
 import '../controller/search_controller.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -42,6 +40,10 @@ class _SearchScreenState extends State<SearchScreen> {
     'ONE-WAY',
     'MULTI-CITY',
   ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       width: w * 0.8,
                       child: CustomTextField(
+                          icon: fromController.text.isEmpty
+                              ? SizedBox.shrink()
+                              : Icon(Icons.close_rounded),
+                          onTap: () {
+                            fromController.clear();
+                          },
                           focusNode: _focusNode,
                           textEditingController: fromController,
                           hintText: 'Search City',
@@ -151,6 +159,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       width: w * 0.8,
                       child: CustomTextField(
+                          icon: toController.text.isEmpty
+                              ? SizedBox.shrink()
+                              : Icon(Icons.close_rounded),
+                          onTap: () {
+                            toController.clear();
+                          },
                           textEditingController: toController,
                           hintText: 'Search City',
                           labelText: 'To',

@@ -16,6 +16,7 @@ import 'package:travel_app/presentation/booking_history/view/my_bookings_screen.
 import 'package:country_picker/country_picker.dart';
 import 'package:travel_app/presentation/home_bottom_nav/views/payment_method.dart';
 
+import '../../../app/configs/app_border_radius.dart';
 import '../../../app/configs/app_colors.dart';
 import '../../../app/data/data_controller.dart';
 
@@ -212,11 +213,13 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
       TextEditingController controller,
       DatePickerMode initialDatePickerMode,
       bool isPass) async {
+    final DateTime today = DateTime.now();
+    final DateTime eighteenYearsAgo = DateTime(today.year - 18, 12, 31);
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2101),
+      initialDate: isPass == false ? eighteenYearsAgo : DateTime.now(),
+      firstDate: DateTime(1901),
+      lastDate: isPass == false ? eighteenYearsAgo : DateTime(2101),
       initialDatePickerMode: initialDatePickerMode,
     );
 
@@ -226,8 +229,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
         controller.text = DatePickerMode == DatePickerMode.year
             ? "${picked.year}"
             : initialDatePickerMode == DatePickerEntryMode.calendar
-            ? "${picked.month}"
-            : "${picked.day}";
+                ? "${picked.month}"
+                : "${picked.day}";
         if (isPass == false) {
           _updateTextControllers();
         } else {
@@ -256,8 +259,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
         controller.text = DatePickerMode == DatePickerMode.year
             ? "${picked.year}"
             : initialDatePickerMode == DatePickerEntryMode.calendar
-            ? "${picked.month}"
-            : "${picked.day}";
+                ? "${picked.month}"
+                : "${picked.day}";
         if (isPass == false) {
           _updateTextControllers();
         } else {
@@ -362,7 +365,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
       initialDatePickerMode: initialDatePickerMode,
     );
@@ -807,6 +810,12 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                             width: 0.5,
                             color: Colors.grey,
                           ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.red,
+                          ),
+                          borderRadius: AppBorderRadius.circularBorderNormal,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: const BorderSide(
@@ -1499,7 +1508,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                           ),
                           0.01.ph,
                           CommonText(
-                            text: 'IN-BOUND',
+                            text: 'Inbound',
                             fontSize: 8.0,
                           )
                         ],
@@ -1523,16 +1532,29 @@ class _FlightSummaryState extends State<FlightSummary> {
               fontSize: 11,
             ),
             0.02.ph,
-            CommonText(
-              text: "Child x${widget.childCount}",
-              fontSize: 11,
-            ),
-            0.02.ph,
-            CommonText(
-              text: "Infant x${widget.infantCount}",
-              fontSize: 11,
-            ),
-            0.02.ph,
+            widget.childCount! < 1
+                ? SizedBox.shrink()
+                : Column(
+                    children: [
+                      CommonText(
+                        text: "Child x${widget.childCount}",
+                        fontSize: 11,
+                      ),
+                      0.02.ph,
+                    ],
+                  ),
+
+            widget.infantCount! < 1
+                ? SizedBox.shrink()
+                : Column(
+                    children: [
+                      CommonText(
+                        text: "Infant x${widget.infantCount}",
+                        fontSize: 11,
+                      ),
+                      0.02.ph,
+                    ],
+                  ),
             CommonText(
               text: widget.cabinClass,
               fontSize: 11,
@@ -1546,7 +1568,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                   fontSize: 11,
                 ),
                 CommonText(
-                  text: '\$ ${widget.fare}',
+                  text: '\$${widget.fare}',
                   fontSize: 11,
                 ),
               ],
@@ -1560,7 +1582,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                   fontSize: 11,
                 ),
                 CommonText(
-                  text: '\$ ${widget.tax}',
+                  text: '\$${widget.tax}',
                   fontSize: 11,
                 ),
               ],
@@ -1579,7 +1601,7 @@ class _FlightSummaryState extends State<FlightSummary> {
                   weight: FontWeight.w700,
                 ),
                 CommonText(
-                  text: '\$ ${widget.total}',
+                  text: '\$${widget.total}',
                   fontSize: 11,
                   weight: FontWeight.w700,
                 ),

@@ -387,7 +387,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text: '1 x 7 kg',
+                  text: '2 x 7 kg',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -488,7 +488,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text: '\$ ${widget.charges}',
+                  text: '\$${widget.charges.toStringAsFixed(2)}',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -506,7 +506,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text: '\$ ${widget.tax}',
+                  text: '\$${widget.tax.toStringAsFixed(2)}',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -548,8 +548,8 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
                   // Get.to(() => PaymentMethodScreen(
                   dataController.myLoggedIn.value
                       ? Get.to(() => PassengerDetailsScreen(
-                            fare: widget.charges.toString(),
-                            tax: widget.tax.toString(),
+                            fare: widget.charges.toStringAsFixed(2),
+                            tax: widget.tax.toStringAsFixed(2),
                             total: total.toStringAsFixed(2),
                             traveller: widget.traveller,
                             cabinClass: widget.cabinClass,
