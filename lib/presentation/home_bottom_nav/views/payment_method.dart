@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travel_app/app/configs/app_colors.dart';
 import 'package:travel_app/presentation/home_bottom_nav/controller/payment_method_controller.dart';
-import 'package:travel_app/presentation/home_bottom_nav/views/payment_details.dart';
 
 import '../../../app/data/data_controller.dart';
+import '../../../app/utils/custom_widgets/common_text.dart';
 import '../../../app/utils/custom_widgets/custom_appbar.dart';
 import '../../../app/utils/custom_widgets/custom_button.dart';
 import '../../../app/utils/custom_widgets/custom_outline_button.dart';
 import '../../../app/utils/custom_widgets/gradient_snackbar.dart';
+import '../controller/agency_balace_controller.dart';
 import '../controller/flight_booking_controller.dart';
 import '../model/payment_method_model.dart';
 import 'payment_waafi_screen.dart';
@@ -219,6 +220,8 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
+  final AgencyBalanceController agencyBalanceController =
+      Get.put(AgencyBalanceController());
   final PaymentMethodController paymentMethodController =
       Get.put(PaymentMethodController());
   final Rx<PaymentMethodModel> paymentMethodModel = PaymentMethodModel().obs;
@@ -236,6 +239,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       paymentMethodController.fetchMethod();
+      agencyBalanceController.fetchAgencyBalance();
       dataController.loadMyData();
     });
   }
@@ -265,6 +269,22 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       // CommonText(
                       //   text: 'ID ${dataController.myRoleId.value}'
                       // ),
+                      Row(
+                        children: [
+                          CommonText(text: 'Balance: ', fontSize: 16),
+                          CommonText(
+                              text:
+                                  ' ${agencyBalanceController.agencyBalance.value}',
+                              fontSize: 20,
+                              weight: FontWeight.w500,
+                              color:
+                                  agencyBalanceController.agencyBalance.value <
+                                          0.0
+                                      ? AppColors.appColorTextRed
+                                      : AppColors.appColorPrimary),
+                        ],
+                      ),
+                      Divider(),
                       Expanded(
                         child: Obx(() {
                           if (paymentMethodController.isLoading.value) {

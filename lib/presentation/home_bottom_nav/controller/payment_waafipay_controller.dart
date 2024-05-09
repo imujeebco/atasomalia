@@ -358,7 +358,7 @@ class WaafiBookingController extends GetxController {
           {"flightId": myflightID, "searchId": mySearchID}
         ],
         "paymentTypeId": mypaymentID,
-        "microSiteClientId": 1,
+        "microSiteClientId": 2,
         "paymentParams": {"phoneNumber": waafiNumber},
         "passengers": passengers
       });

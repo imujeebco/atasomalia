@@ -52,6 +52,8 @@ class LoginController extends GetxController {
         await prefs.setInt('roleID', jsonData["data"]["role"]);
         await prefs.setString(
             'savedRefToken', jsonData["data"]["refreshToken"]);
+        await prefs.setInt(
+            'savedRoleSupportId', jsonData["data"]["roleSupportId"]);
 
         await prefs.setBool('loggedInStatus', true);
         Get.showSnackbar(gradientSnackbar("Success", "${jsonData["message"]}",

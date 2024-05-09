@@ -279,6 +279,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
     int? requiredAge,
   ) async {
     try {
+      final DateTime today = DateTime.now();
+      final DateTime eighteenYearsAgo = DateTime(today.year - 18, 12, 31);
       DateTime age =
           DateTime.now().subtract(Duration(days: requiredAge! * 365));
       int ageInitial = age.year - 1;
@@ -286,9 +288,13 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
 
       final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: age,
-        firstDate: DateTime.parse('$ageInitial-01-01 01:39:59.409476'),
-        lastDate: DateTime.parse('$ageFinal-01-01 01:39:59.409476'),
+        initialDate: ageInitial == 0 ? eighteenYearsAgo : age,
+        firstDate: ageInitial == 0
+            ? DateTime(1901)
+            : DateTime.parse('$ageInitial-01-01 01:39:59.409476'),
+        lastDate: ageInitial == 0
+            ? eighteenYearsAgo
+            : DateTime.parse('$ageFinal-01-01 01:39:59.409476'),
         initialDatePickerMode: initialDatePickerMode,
       );
 

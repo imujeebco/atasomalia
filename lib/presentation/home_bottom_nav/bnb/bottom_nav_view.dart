@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel_app/app/configs/app_colors.dart';
@@ -130,7 +129,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                             );
                           }),
                         ),
-                        dataController.myRoleId.value == 6
+                        // role: 4 is AGENT
+                        dataController.myRoleId.value == 4
                             ? ListTile(
                                 dense: true,
                                 onTap: () async {

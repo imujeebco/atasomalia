@@ -586,7 +586,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
                             //
                           ))
                       : Dialogs.showCustomAlertDialog(context,
-                          "Login Required for booking flights.\n\nPlease Login",
+                          "Please Login\n\nLogin required for flight booking",
                           () {
                           Get.offAll(() => LoginScreen());
                         }, () {
