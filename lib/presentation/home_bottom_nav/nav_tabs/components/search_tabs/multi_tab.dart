@@ -7,6 +7,8 @@ import 'package:travel_app/app/utils/custom_widgets/custom_button.dart';
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/return_tab.dart';
 import 'package:travel_app/presentation/home_bottom_nav/views/search_flights.dart';
 
+import 'multi_city_flights/view/multi_city_flights_search.dart';
+
 // ignore: must_be_immutable
 class MultiTabView extends StatefulWidget {
   String? toCity;
@@ -72,6 +74,19 @@ class _MultiTabViewState extends State<MultiTabView> {
 
   String _formatDate(DateTime date) {
     return DateFormat('E, d MMM y').format(date);
+  }
+
+  // void navigate() {
+  //   Get.to(() => MulticityFlightScreen());
+  // }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => MulticityFlightScreen()));
+    });
+    super.initState();
   }
 
   @override
@@ -155,9 +170,9 @@ class _MultiTabViewState extends State<MultiTabView> {
                       arriveDate: arriveDate.toString(),
                       departDate: departDate.toString(),
                       tripType: tripType.toString(),
-                      adultCount:1,
+                      adultCount: 1,
                       childCount: 0,
-                      infantCount:0,
+                      infantCount: 0,
                       //
                       child1age: 1,
                       child2age: 1,

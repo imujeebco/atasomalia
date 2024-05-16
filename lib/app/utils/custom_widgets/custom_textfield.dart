@@ -5,7 +5,7 @@ import 'package:travel_app/app/configs/app_border_radius.dart';
 import 'package:travel_app/app/configs/app_size_config.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final bool? readOnly;
@@ -26,7 +26,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final EdgeInsetsGeometry? contentpadding;
   const CustomTextField({
-    required this.textEditingController,
+    this.textEditingController,
     this.validator,
     this.readOnly,
     required this.hintText,

@@ -10,6 +10,7 @@ import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/sear
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/return_tab.dart';
 
 import '../controller/search_controller.dart';
+import 'components/search_tabs/multi_tab.dart';
 
 class SearchScreen extends StatefulWidget {
   String? cabinClass;
@@ -69,9 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       width: w * 0.8,
                       child: CustomTextField(
-                          icon: fromController.text.isEmpty
-                              ? SizedBox.shrink()
-                              : Icon(Icons.close_rounded),
+                          icon: fromController.text.isEmpty ? SizedBox.shrink() : Icon(Icons.close_rounded),
                           onTap: () {
                             fromController.clear();
                           },
@@ -80,8 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintText: 'Search City',
                           labelText: 'From',
                           onChanged: (value) {
-                            searchController
-                                .fetchSearch1(fromController.text.trim());
+                            searchController.fetchSearch1(fromController.text.trim());
                           },
                           validator: (inputValue) {
                             if (inputValue!.isEmpty) {
@@ -109,29 +107,19 @@ class _SearchScreenState extends State<SearchScreen> {
                         : Container(
                             height: 250,
                             margin: EdgeInsets.only(left: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.black12,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: searchController
-                                            .searchModel.value.airports !=
-                                        null &&
-                                    searchController
-                                        .searchModel.value.airports!.isNotEmpty
+                            decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(15)),
+                            child: searchController.searchModel.value.airports != null && searchController.searchModel.value.airports!.isNotEmpty
                                 ? ListView.builder(
-                                    itemCount: searchController
-                                        .searchModel.value.airports!.length,
+                                    itemCount: searchController.searchModel.value.airports!.length,
                                     itemBuilder: (context, index) {
-                                      final airport = searchController
-                                          .searchModel.value.airports![index];
+                                      final airport = searchController.searchModel.value.airports![index];
                                       return ListTile(
                                         onTap: () {
                                           setState(() {
-                                            fromController.text =
-                                                "${airport.code},${airport.city}";
+                                            fromController.text = "${airport.code},${airport.city}";
                                             fromCode = airport.code.toString();
                                             fromCity = airport.city.toString();
-                                            fromCountry =
-                                                airport.country.toString();
+                                            fromCountry = airport.country.toString();
                                             searchController.fetchSearch1("");
                                           });
                                         },
@@ -159,9 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     SizedBox(
                       width: w * 0.8,
                       child: CustomTextField(
-                          icon: toController.text.isEmpty
-                              ? SizedBox.shrink()
-                              : Icon(Icons.close_rounded),
+                          icon: toController.text.isEmpty ? SizedBox.shrink() : Icon(Icons.close_rounded),
                           onTap: () {
                             toController.clear();
                           },
@@ -169,8 +155,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           hintText: 'Search City',
                           labelText: 'To',
                           onChanged: (value) {
-                            searchController
-                                .fetchSearch2(toController.text.trim());
+                            searchController.fetchSearch2(toController.text.trim());
                           },
                           validator: (inputValue) {
                             if (inputValue!.isEmpty) {
@@ -195,29 +180,19 @@ class _SearchScreenState extends State<SearchScreen> {
                         : Container(
                             height: 250,
                             margin: EdgeInsets.only(left: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.black12,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: searchController
-                                            .searchModel.value.airports !=
-                                        null &&
-                                    searchController
-                                        .searchModel.value.airports!.isNotEmpty
+                            decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(15)),
+                            child: searchController.searchModel.value.airports != null && searchController.searchModel.value.airports!.isNotEmpty
                                 ? ListView.builder(
-                                    itemCount: searchController
-                                        .searchModel.value.airports!.length,
+                                    itemCount: searchController.searchModel.value.airports!.length,
                                     itemBuilder: (context, index) {
-                                      final airport = searchController
-                                          .searchModel.value.airports![index];
+                                      final airport = searchController.searchModel.value.airports![index];
                                       return ListTile(
                                         onTap: () {
                                           setState(() {
-                                            toController.text =
-                                                "${airport.code},${airport.city}";
+                                            toController.text = "${airport.code},${airport.city}";
                                             toCode = airport.code.toString();
                                             toCity = airport.city.toString();
-                                            toCountry =
-                                                airport.country.toString();
+                                            toCountry = airport.country.toString();
                                             searchController.fetchSearch2("");
                                           });
                                         },
@@ -256,28 +231,21 @@ class _SearchScreenState extends State<SearchScreen> {
                           unselectedLabelColor: Colors.black,
                           // indicatorWeight: 2.5,
                           // indicatorPadding: EdgeInsets.symmetric(horizontal: 20.0),
-                          labelPadding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 30.0),
+                          labelPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 30.0),
                           tabs: List.generate(tabsNames.length, (i) {
                             return Container(
                               alignment: Alignment.center,
                               height: 30,
                               width: 120,
                               decoration: BoxDecoration(
-                                color: selectedTabIndex == i
-                                    ? AppColors.appColorPrimary
-                                    : Colors.transparent,
+                                color: selectedTabIndex == i ? AppColors.appColorPrimary : Colors.transparent,
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: CommonText(
                                 text: tabsNames[i],
                                 fontSize: 12.0,
-                                color: selectedTabIndex == i
-                                    ? Colors.white
-                                    : Colors.black,
-                                weight: selectedTabIndex == i
-                                    ? FontWeight.w600
-                                    : FontWeight.w400,
+                                color: selectedTabIndex == i ? Colors.white : Colors.black,
+                                weight: selectedTabIndex == i ? FontWeight.w600 : FontWeight.w400,
                               ),
                             );
                           }),
@@ -287,18 +255,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           height: h * 1,
                           child: TabBarView(
                             children: [
-                              ReturnTabView(
-                                  cabinClass: widget.cabinClass ?? "Economy",
-                                  fromCity: fromCode,
-                                  toCity: toCode),
-                              OneWayTabView(
-                                  cabinClass: widget.cabinClass ?? "Economy",
-                                  fromCity: fromCode,
-                                  toCity: toCode),
-                              ReturnTabView(
-                                  cabinClass: widget.cabinClass ?? "Economy",
-                                  fromCity: fromCode,
-                                  toCity: toCode),
+                              ReturnTabView(cabinClass: widget.cabinClass ?? "Economy", fromCity: fromCode, toCity: toCode),
+                              OneWayTabView(cabinClass: widget.cabinClass ?? "Economy", fromCity: fromCode, toCity: toCode),
+                              MultiTabView(cabinClass: widget.cabinClass ?? "Economy", fromCity: fromCode, toCity: toCode),
                               // MultiTabView(
                               //     cabinClass: widget.cabinClass ?? "Economy",
                               //     fromCity: fromCode,

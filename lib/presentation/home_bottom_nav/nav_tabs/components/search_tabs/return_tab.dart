@@ -7,6 +7,7 @@ import 'package:travel_app/app/utils/custom_widgets/common_text.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_button.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_toast.dart';
 import 'package:travel_app/app/utils/custom_widgets/gradient_snackbar.dart';
+import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_city_flights/view/multi_city_flights_search.dart';
 import 'package:travel_app/presentation/home_bottom_nav/views/search_flights.dart';
 import 'package:intl/intl.dart';
 import '../../../../../app/configs/app_colors.dart';
@@ -50,7 +51,7 @@ class _ReturnTabViewState extends State<ReturnTabView> {
   setArgs() {
     _cabinClass = widget.cabinClass;
     selectedCabin = _cabinClass.toString();
-    print("Return Tabe Cabin: ${widget.cabinClass}");
+    print("Return Tab Cabin: ${widget.cabinClass}");
   }
 
   var travellerList = [
@@ -203,7 +204,7 @@ class _ReturnTabViewState extends State<ReturnTabView> {
               onInc: () {
                 setState(() {
                   //if (childCount < adultCount) {
-                    childCount++;
+                  childCount++;
                   //}
                 });
               },

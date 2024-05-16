@@ -51,7 +51,7 @@ class _OneWayTabViewState extends State<OneWayTabView> {
   setArgs() {
     _cabinClass = widget.cabinClass;
     selectedCabin = _cabinClass.toString();
-    print("Return Tabe Cabin: ${widget.cabinClass}");
+    print("OneWay Tab Cabin: ${widget.cabinClass}");
   }
 
   var travellerList = [
@@ -138,8 +138,8 @@ class _OneWayTabViewState extends State<OneWayTabView> {
                   if (adultCount < 4) {
                     adultCount++;
                   }
-                  // childCount = 0;
-                  // infantCount = 0;
+                  childCount = 0;
+                  infantCount = 0;
                 });
               },
               onDec: () {
@@ -147,8 +147,8 @@ class _OneWayTabViewState extends State<OneWayTabView> {
                   if (adultCount > 1) {
                     adultCount--;
                   }
-                  // childCount = 0;
-                  // infantCount = 0;
+                  childCount = 0;
+                  infantCount = 0;
                 });
               },
               count: adultCount),
@@ -159,9 +159,9 @@ class _OneWayTabViewState extends State<OneWayTabView> {
               title: "Child",
               onInc: () {
                 setState(() {
-                  //if (childCount < adultCount) {
+                  if (childCount < adultCount) {
                     childCount++;
-                  //}
+                  }
                 });
               },
               onDec: () {
@@ -605,8 +605,7 @@ class _OneWayTabViewState extends State<OneWayTabView> {
                 value: selectedCabin,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
                 items: cabinList.map((String item) {
-                  return DropdownMenuItem(
-                      value: item, child: CommonText(text: item));
+                  return DropdownMenuItem(value: item, child: CommonText(text: item));
                 }).toList(),
                 onChanged: (String? val) {
                   setState(() => selectedCabin = val!);
@@ -621,15 +620,8 @@ class _OneWayTabViewState extends State<OneWayTabView> {
             width: w,
             text: 'Search Flight',
             onPress: () {
-              if (widget.toCity == "" ||
-                  widget.fromCity == "" ||
-                  departDate == "Select Date" ||
-                  departDate == "") {
-                Get.showSnackbar(gradientSnackbar(
-                    "Incomplete Form",
-                    "Please fill the form correctly",
-                    AppColors.orange,
-                    Icons.warning_rounded));
+              if (widget.toCity == "" || widget.fromCity == "" || departDate == "Select Date" || departDate == "") {
+                Get.showSnackbar(gradientSnackbar("Incomplete Form", "Please fill the form correctly", AppColors.orange, Icons.warning_rounded));
               } else {
                 Get.to(() => OneWaySearchFlightScreen(
                       cabinClass: widget.cabinClass.toString(),
@@ -642,7 +634,7 @@ class _OneWayTabViewState extends State<OneWayTabView> {
                       adultCount: adultCount,
                       childCount: childCount,
                       infantCount: infantCount,
-                           //
+                      //
                       child1age: selectedChildAge1,
                       child2age: selectedChildAge2,
                       child3age: selectedChildAge3,
@@ -675,8 +667,7 @@ class _OneWayTabViewState extends State<OneWayTabView> {
               value: child.toString(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
               items: childAgeList.map((String item) {
-                return DropdownMenuItem(
-                    value: item, child: CommonText(text: item));
+                return DropdownMenuItem(value: item, child: CommonText(text: item));
               }).toList(),
               onChanged: (String? val) {
                 setState(() => child = val!);
@@ -716,22 +707,14 @@ class ageCounter extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
-                  iconSize: 10,
-                  color: Colors.white,
-                  onPressed: onDec,
-                  icon: Icon(Icons.remove)),
+              IconButton(iconSize: 10, color: Colors.white, onPressed: onDec, icon: Icon(Icons.remove)),
               CommonText(
                 text: "$age",
                 color: Colors.white,
                 fontSize: 15,
                 weight: FontWeight.bold,
               ),
-              IconButton(
-                  iconSize: 10,
-                  color: Colors.white,
-                  onPressed: onInc,
-                  icon: Icon(Icons.add)),
+              IconButton(iconSize: 10, color: Colors.white, onPressed: onInc, icon: Icon(Icons.add)),
             ],
           ),
         ),
@@ -769,17 +752,13 @@ class Counter extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
-                  onPressed: onDec,
-                  icon: Icon(Icons.remove, color: Colors.white, size: 20)),
+              IconButton(onPressed: onDec, icon: Icon(Icons.remove, color: Colors.white, size: 20)),
               CommonText(
                 text: "$count",
                 color: Colors.white,
                 weight: FontWeight.bold,
               ),
-              IconButton(
-                  onPressed: onInc,
-                  icon: Icon(Icons.add, color: Colors.white, size: 20)),
+              IconButton(onPressed: onInc, icon: Icon(Icons.add, color: Colors.white, size: 20)),
             ],
           ),
         ),
