@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:travel_app/app/configs/app_colors.dart';
 import 'package:travel_app/app/configs/app_size_config.dart';
+import 'package:travel_app/app/data/data_controller.dart';
 import 'package:travel_app/app/utils/custom_widgets/common_text.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_appbar.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_button.dart';
-import 'package:travel_app/presentation/auth/view/login_screen.dart';
-import 'package:travel_app/presentation/home_bottom_nav/controller/flight_fare_rule_controller.dart';
-import 'package:travel_app/presentation/home_bottom_nav/views/passenger_details.dart';
-
-import '../../../app/data/data_controller.dart';
-import '../../../app/utils/custom_functions/app_alerts.dart';
+import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_city_flights/controller/multi_city_fare_rule_controller.dart';
 
 // ignore: must_be_immutable
-class FlightDetailsScreen extends StatefulWidget {
+class MultiCItyFareDetailsScreen extends StatefulWidget {
+  dynamic cityList;
+  dynamic flightsMap;
+  /*
   String searchID;
   String flightID;
   String cabinClass;
@@ -40,7 +39,7 @@ class FlightDetailsScreen extends StatefulWidget {
   String arriveToDate2;
   String arriveToTime2;
   String arriveToCode2;
-
+  */
   //
   int? child1age;
   int? child2age;
@@ -53,8 +52,9 @@ class FlightDetailsScreen extends StatefulWidget {
   int? infant4age;
   //
 
-  FlightDetailsScreen({
+  MultiCItyFareDetailsScreen({
     super.key,
+    /*
     required this.searchID,
     required this.flightID,
     required this.cabinClass,
@@ -78,7 +78,9 @@ class FlightDetailsScreen extends StatefulWidget {
     required this.arriveToDate2,
     required this.arriveToTime2,
     required this.arriveToCode2,
-
+    */
+    required this.cityList,
+    this.flightsMap,
     //
     required this.child1age,
     required this.child2age,
@@ -93,19 +95,19 @@ class FlightDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<FlightDetailsScreen> createState() => _FlightDetailsScreenState();
+  State<MultiCItyFareDetailsScreen> createState() => _MultiCItyFareDetailsScreenState();
 }
 
-class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
+class _MultiCItyFareDetailsScreenState extends State<MultiCItyFareDetailsScreen> {
   final DataController dataController = Get.put(DataController());
-  final FlightFareRuleController flightFareRuleController = Get.put(FlightFareRuleController());
+  final MultiCityFlightFareRuleController flightFareRuleController = Get.put(MultiCityFlightFareRuleController());
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       dataController.loadMyData();
-      flightFareRuleController.fetchFareRule(widget.searchID, widget.flightID);
+      flightFareRuleController.fetchFareRule(widget.flightsMap);
     });
   }
 
@@ -136,7 +138,7 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                if (flightFareRuleController.flightFareRuleControllerModel.value.flights!.isEmpty) {
+                if (flightFareRuleController.multiCityFlightFareRuleModel.value.flights!.isEmpty) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -152,15 +154,16 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                     ),
                   );
                 } else {
-                  var data1 = flightFareRuleController.flightFareRuleControllerModel.value.flights;
+                  var data1 = flightFareRuleController.multiCityFlightFareRuleModel.value.flights;
                   return Expanded(
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
-                          itemCount: data1!.length,
+                          itemCount: data1?.length,
                           itemBuilder: (context, index) {
                             return Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
                               FlightPackageWidget(
                                 name: 'Saver',
+                                /*
                                 traveller: widget.traveller,
                                 cabinClass: widget.cabinClass,
                                 charges: data1[index]!.totalAmount,
@@ -184,16 +187,17 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
                                 adultCount: widget.adultCount,
                                 childCount: widget.childCount,
                                 infantCount: widget.infantCount,
+                                */
+
+                                child1age: widget.child1age ?? 1,
+                                child2age: widget.child2age ?? 1,
+                                child3age: widget.child3age ?? 1,
+                                child4age: widget.child4age ?? 1,
                                 //
-                                child1age: widget.child1age,
-                                child2age: widget.child2age,
-                                child3age: widget.child3age,
-                                child4age: widget.child4age,
-                                //
-                                infant1age: widget.infant1age,
-                                infant2age: widget.infant2age,
-                                infant3age: widget.infant3age,
-                                infant4age: widget.infant4age,
+                                infant1age: widget.infant1age ?? 1,
+                                infant2age: widget.infant2age ?? 1,
+                                infant3age: widget.infant3age ?? 1,
+                                infant4age: widget.infant4age ?? 1,
                                 //
                               ),
                             ]);
@@ -213,8 +217,10 @@ class _FlightDetailsScreenState extends State<FlightDetailsScreen> {
 //////////////////////////////////////////////////////////////////////
 // ignore: must_be_immutable
 class FlightPackageWidget extends StatefulWidget {
-  dynamic? charges;
-  dynamic? tax;
+  String name;
+  dynamic charges = 1;
+  dynamic tax = 1;
+  /*
   String searchID;
   String flightID;
   String traveller;
@@ -238,6 +244,7 @@ class FlightPackageWidget extends StatefulWidget {
   String arriveToDate2;
   String arriveToTime2;
   String arriveToCode2;
+  */
   //
   int? child1age;
   int? child2age;
@@ -254,6 +261,7 @@ class FlightPackageWidget extends StatefulWidget {
     required this.name,
     this.charges,
     this.tax,
+    /*
     required this.traveller,
     required this.adultCount,
     required this.childCount,
@@ -275,6 +283,7 @@ class FlightPackageWidget extends StatefulWidget {
     required this.arriveToDate2,
     required this.arriveToTime2,
     required this.arriveToCode2,
+    */
     //
     required this.child1age,
     required this.child2age,
@@ -288,8 +297,6 @@ class FlightPackageWidget extends StatefulWidget {
     //
     super.key,
   });
-
-  final String name;
 
   @override
   State<FlightPackageWidget> createState() => _FlightPackageWidgetState();
@@ -313,7 +320,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic? total = widget.charges + widget.tax!;
+    // dynamic total = widget.charges ?? 0 + widget.tax ?? 0;
 
     return DottedBorder(
       dashPattern: [10, 8],
@@ -334,7 +341,8 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text: '${widget.name} \$${total.toStringAsFixed(2)}',
+                  text: '${widget.name} ',
+                  // \$${total.toStringAsFixed(2) ?? 1}',
                   weight: FontWeight.bold,
                   fontSize: 20.0,
                   color: AppColors.appColorPrimary,
@@ -479,11 +487,11 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CommonText(
-                  text: '\$${widget.charges.toStringAsFixed(2)}',
-                  fontSize: 11,
-                  weight: FontWeight.w600,
-                ),
+                // CommonText(
+                //   text: '\$${widget.charges.toStringAsFixed(2) ?? 1}',
+                //   fontSize: 11,
+                //   weight: FontWeight.w600,
+                // ),
               ],
             ),
 
@@ -497,11 +505,11 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CommonText(
-                  text: '\$${widget.tax.toStringAsFixed(2)}',
-                  fontSize: 11,
-                  weight: FontWeight.w600,
-                ),
+                // CommonText(
+                //   text: '\$${widget.tax.toStringAsFixed(2) ?? 1}',
+                //   fontSize: 11,
+                //   weight: FontWeight.w600,
+                // ),
               ],
             ),
 
@@ -515,11 +523,11 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CommonText(
-                  text: '\$${total.toStringAsFixed(2)}',
-                  fontSize: 11,
-                  weight: FontWeight.w600,
-                ),
+                // CommonText(
+                //   text: '\$${total.toStringAsFixed(2) ?? 1}',
+                //   fontSize: 11,
+                //   weight: FontWeight.w600,
+                // ),
                 // Icon(
                 //   Icons.info,
                 //   size: 20,
@@ -537,12 +545,14 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
                 // text: 'Avail this Flight for \$${total.toStringAsFixed(2)}',
                 text: "Book",
                 onPress: () {
+                  /*
                   // Get.to(() => PaymentMethodScreen(
                   dataController.myLoggedIn.value
                       ? Get.to(() => PassengerDetailsScreen(
                             fare: widget.charges.toStringAsFixed(2),
                             tax: widget.tax.toStringAsFixed(2),
                             total: total.toStringAsFixed(2),
+                            /*
                             traveller: widget.traveller,
                             cabinClass: widget.cabinClass,
                             searchID: widget.searchID,
@@ -561,10 +571,12 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
                             arriveToDate2: widget.arriveToDate2,
                             arriveToCode2: widget.arriveToCode2,
                             arriveToTime2: widget.arriveToTime2,
+                            
                             paymentID: '',
                             adultCount: widget.adultCount,
                             childCount: widget.childCount,
                             infantCount: widget.infantCount,
+                            */
                             //
                             child1age: widget.child1age,
                             child2age: widget.child2age,
@@ -605,6 +617,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
                   //       arriveToCode2: widget.arriveToCode2,
                   //       arriveToTime2: widget.arriveToTime2,
                   //     ));
+                  */
                 }),
           ],
         ),

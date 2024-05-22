@@ -56,7 +56,6 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
   String? departDateForm = "Select Date";
   String? tripType = "Multicity";
   List<Map<String, dynamic>> cityList = [
-    {"from": "Search City", "to": "Search City", "date": "Select Date"},
     {"from": "Search City", "to": "Search City", "date": "Select Date"}
   ];
 
@@ -71,12 +70,9 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
   @override
   void initState() {
     super.initState();
-    // cityList.add(
-    //     {"from": "Search City", "to": "Search City", "date": "Select Date"});
     _addToTextField(0);
     _addFromTextField(0);
-    _addToTextField(1);
-    _addFromTextField(1);
+
     selectedCabin = cabinList[0].toString();
   }
 
