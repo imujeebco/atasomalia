@@ -11,6 +11,8 @@ import 'package:travel_app/app/utils/custom_widgets/custom_appbar.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_button.dart';
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_city_flights/controller/multi_city_fare_rule_controller.dart';
 
+import '../../../../../model/flight_quote_model.dart';
+
 // ignore: must_be_immutable
 class MultiCItyFareDetailsScreen extends StatefulWidget {
   dynamic cityList;
@@ -95,12 +97,15 @@ class MultiCItyFareDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<MultiCItyFareDetailsScreen> createState() => _MultiCItyFareDetailsScreenState();
+  State<MultiCItyFareDetailsScreen> createState() =>
+      _MultiCItyFareDetailsScreenState();
 }
 
-class _MultiCItyFareDetailsScreenState extends State<MultiCItyFareDetailsScreen> {
+class _MultiCItyFareDetailsScreenState
+    extends State<MultiCItyFareDetailsScreen> {
   final DataController dataController = Get.put(DataController());
-  final MultiCityFlightFareRuleController flightFareRuleController = Get.put(MultiCityFlightFareRuleController());
+  final MultiCityFlightFareRuleController flightFareRuleController =
+      Get.put(MultiCityFlightFareRuleController());
 
   @override
   void initState() {
@@ -138,7 +143,8 @@ class _MultiCItyFareDetailsScreenState extends State<MultiCItyFareDetailsScreen>
                   child: CircularProgressIndicator(),
                 );
               } else {
-                if (flightFareRuleController.multiCityFlightFareRuleModel.value.flights!.isEmpty) {
+                if (flightFareRuleController
+                    .multiCityFlightFareRuleModel.value.flights!.isEmpty) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -149,21 +155,32 @@ class _MultiCItyFareDetailsScreenState extends State<MultiCItyFareDetailsScreen>
                           size: 88,
                           color: Colors.grey,
                         ),
-                        Text("No Data Found", style: const TextStyle(color: Colors.black54, fontSize: 24, fontWeight: FontWeight.bold))
+                        Text("No Data Found",
+                            style: const TextStyle(
+                                color: Colors.black54,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold))
                       ],
                     ),
                   );
                 } else {
-                  var data1 = flightFareRuleController.multiCityFlightFareRuleModel.value.flights;
+                  var data1 = flightFareRuleController
+                      .multiCityFlightFareRuleModel.value.flights;
                   return Expanded(
                       child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           itemCount: data1?.length,
                           itemBuilder: (context, index) {
-                            return Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                              FlightPackageWidget(
-                                name: 'Saver',
-                                /*
+                            // Map<String, dynamic> item =
+                            //     data1![index] as Map<String, dynamic>;
+                            return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FlightPackageWidget(
+                                    name: 'Saver',
+                                    item: data1,
+                                    /*
                                 traveller: widget.traveller,
                                 cabinClass: widget.cabinClass,
                                 charges: data1[index]!.totalAmount,
@@ -189,18 +206,18 @@ class _MultiCItyFareDetailsScreenState extends State<MultiCItyFareDetailsScreen>
                                 infantCount: widget.infantCount,
                                 */
 
-                                child1age: widget.child1age ?? 1,
-                                child2age: widget.child2age ?? 1,
-                                child3age: widget.child3age ?? 1,
-                                child4age: widget.child4age ?? 1,
-                                //
-                                infant1age: widget.infant1age ?? 1,
-                                infant2age: widget.infant2age ?? 1,
-                                infant3age: widget.infant3age ?? 1,
-                                infant4age: widget.infant4age ?? 1,
-                                //
-                              ),
-                            ]);
+                                    child1age: widget.child1age ?? 1,
+                                    child2age: widget.child2age ?? 1,
+                                    child3age: widget.child3age ?? 1,
+                                    child4age: widget.child4age ?? 1,
+                                    //
+                                    infant1age: widget.infant1age ?? 1,
+                                    infant2age: widget.infant2age ?? 1,
+                                    infant3age: widget.infant3age ?? 1,
+                                    infant4age: widget.infant4age ?? 1,
+                                    //
+                                  ),
+                                ]);
                           }));
                 }
               }
@@ -220,6 +237,7 @@ class FlightPackageWidget extends StatefulWidget {
   String name;
   dynamic charges = 1;
   dynamic tax = 1;
+  List<dynamic>? item;
   /*
   String searchID;
   String flightID;
@@ -261,6 +279,7 @@ class FlightPackageWidget extends StatefulWidget {
     required this.name,
     this.charges,
     this.tax,
+    required this.item,
     /*
     required this.traveller,
     required this.adultCount,
@@ -320,7 +339,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // dynamic total = widget.charges ?? 0 + widget.tax ?? 0;
+    int total = widget.item?[0].ticketAmount + widget.item?[0].taxesAmount;
 
     return DottedBorder(
       dashPattern: [10, 8],
@@ -487,11 +506,12 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // CommonText(
-                //   text: '\$${widget.charges.toStringAsFixed(2) ?? 1}',
-                //   fontSize: 11,
-                //   weight: FontWeight.w600,
-                // ),
+                CommonText(
+                  text:
+                      '\$${widget.item?[0].ticketAmount.toStringAsFixed(2) ?? 1}',
+                  fontSize: 11,
+                  weight: FontWeight.w600,
+                ),
               ],
             ),
 
@@ -505,11 +525,12 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // CommonText(
-                //   text: '\$${widget.tax.toStringAsFixed(2) ?? 1}',
-                //   fontSize: 11,
-                //   weight: FontWeight.w600,
-                // ),
+                CommonText(
+                  text:
+                      '\$${widget.item?[0].taxesAmount.toStringAsFixed(2) ?? 1}',
+                  fontSize: 11,
+                  weight: FontWeight.w600,
+                ),
               ],
             ),
 
@@ -523,11 +544,11 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // CommonText(
-                //   text: '\$${total.toStringAsFixed(2) ?? 1}',
-                //   fontSize: 11,
-                //   weight: FontWeight.w600,
-                // ),
+                CommonText(
+                  text: '\$${total.toStringAsFixed(2)}',
+                  fontSize: 11,
+                  weight: FontWeight.w600,
+                ),
                 // Icon(
                 //   Icons.info,
                 //   size: 20,
