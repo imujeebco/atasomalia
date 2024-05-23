@@ -15,8 +15,6 @@ import 'package:travel_app/presentation/home_bottom_nav/views/passenger_details.
 import '../../../../../../../app/data/data_controller.dart';
 import '../../../../../../../app/utils/custom_functions/app_alerts.dart';
 
-
-
 // ignore: must_be_immutable
 class MultiCityFlightDetailScreen extends StatefulWidget {
   String searchID;
@@ -93,10 +91,12 @@ class MultiCityFlightDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<MultiCityFlightDetailScreen> createState() => _MultiCityFlightDetailScreenState();
+  State<MultiCityFlightDetailScreen> createState() =>
+      _MultiCityFlightDetailScreenState();
 }
 
-class _MultiCityFlightDetailScreenState extends State<MultiCityFlightDetailScreen> {
+class _MultiCityFlightDetailScreenState
+    extends State<MultiCityFlightDetailScreen> {
   final DataController dataController = Get.put(DataController());
   final FlightFareRuleController flightFareRuleController =
       Get.put(FlightFareRuleController());

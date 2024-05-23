@@ -26,7 +26,8 @@ class MulticityFlightScreen extends StatefulWidget {
 }
 
 class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
-  final MulticitySearchController1 searchController = Get.put(MulticitySearchController1());
+  final MulticitySearchController1 searchController =
+      Get.put(MulticitySearchController1());
   final FocusNode _focusNode = FocusNode();
   TextEditingController fromController = TextEditingController();
   TextEditingController toController = TextEditingController();
@@ -102,13 +103,19 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
     bool cond = false;
 // For Validation ------
     cityList.forEach((elem) {
-      if (elem['to'] == "Search City" || elem['from'] == "Search City" || elem['date'] == "Select Date") {
+      if (elem['to'] == "Search City" ||
+          elem['from'] == "Search City" ||
+          elem['date'] == "Select Date") {
         cond = true;
       }
     });
 
     if (cond == true) {
-      Get.showSnackbar(gradientSnackbar("Incomplete Form", "Please fill the form correctly", AppColors.orange, Icons.warning_rounded));
+      Get.showSnackbar(gradientSnackbar(
+          "Incomplete Form",
+          "Please fill the form correctly",
+          AppColors.orange,
+          Icons.warning_rounded));
     } else {
       // preparing data to post -------
       cityList.forEach((itm) {
@@ -172,7 +179,10 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
             Get.offAll(() => BottomNavScreen());
           },
         ),
-        title: CommonText(text: 'Multi City', weight: AppFontWeights.appTextFontWeightMedium, fontSize: 20.0),
+        title: CommonText(
+            text: 'Multi City',
+            weight: AppFontWeights.appTextFontWeightMedium,
+            fontSize: 20.0),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -210,16 +220,23 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                                     SizedBox(
                                       width: w * 0.75,
                                       child: CustomTextField(
-                                          icon: fromControllers[index].text.isEmpty ? SizedBox.shrink() : Icon(Icons.close_rounded),
+                                          icon: fromControllers[index]
+                                                  .text
+                                                  .isEmpty
+                                              ? SizedBox.shrink()
+                                              : Icon(Icons.close_rounded),
                                           onTap: () {
                                             fromControllers[index].clear();
                                           },
                                           // focusNode: _focusNode,
-                                          textEditingController: fromControllers[index],
+                                          textEditingController:
+                                              fromControllers[index],
                                           hintText: 'Search City',
                                           labelText: 'From',
                                           onChanged: (val) {
-                                            searchController.fetchMulticitySearch1(val!.trim(), index);
+                                            searchController
+                                                .fetchMulticitySearch1(
+                                                    val!.trim(), index);
                                           },
                                           validator: (inputValue) {
                                             if (inputValue!.isEmpty) {
@@ -234,43 +251,73 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                                 Obx(
                                   () {
                                     // ignore: unrelated_type_equality_checks
-                                    return searchController.mySearch1.value[index] == ""
+                                    return searchController
+                                                .mySearch1.value[index] ==
+                                            ""
                                         ? Container()
                                         : Container(
                                             height: 250,
                                             margin: EdgeInsets.only(left: 20),
-                                            decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(15)),
-                                            child:
-                                                searchController.searchModel.value.airports != null && searchController.searchModel.value.airports!.isNotEmpty
-                                                    ? ListView.builder(
-                                                        itemCount: searchController.searchModel.value.airports!.length,
-                                                        itemBuilder: (context, ind) {
-                                                          final airport = searchController.searchModel.value.airports![ind];
-                                                          return ListTile(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                fromControllers[index].text = "${airport.code},${airport.city}";
-                                                                fromCode = airport.code.toString();
+                                            decoration: BoxDecoration(
+                                                color: Colors.black12,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: searchController.searchModel
+                                                            .value.airports !=
+                                                        null &&
+                                                    searchController
+                                                        .searchModel
+                                                        .value
+                                                        .airports!
+                                                        .isNotEmpty
+                                                ? ListView.builder(
+                                                    itemCount: searchController
+                                                        .searchModel
+                                                        .value
+                                                        .airports!
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, ind) {
+                                                      final airport =
+                                                          searchController
+                                                              .searchModel
+                                                              .value
+                                                              .airports![ind];
+                                                      return ListTile(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            fromControllers[
+                                                                        index]
+                                                                    .text =
+                                                                "${airport.code},${airport.city}";
+                                                            fromCode = airport
+                                                                .code
+                                                                .toString();
 
-                                                                // fromCity = airport
-                                                                //     .city
-                                                                //     .toString();
-                                                                // fromCountry = airport
-                                                                //     .country
-                                                                //     .toString();
-                                                                searchController.fetchMulticitySearch1("", index);
-                                                                // cityList[index]['fromText'] = "${airport.code},${airport.city}";
-                                                                // cityList[index]["from"] = "${airport.code}";
-                                                              });
-                                                            },
-                                                            title: Text(airport.name),
-                                                            subtitle: Text(airport.city),
-                                                          );
+                                                            // fromCity = airport
+                                                            //     .city
+                                                            //     .toString();
+                                                            // fromCountry = airport
+                                                            //     .country
+                                                            //     .toString();
+                                                            searchController
+                                                                .fetchMulticitySearch1(
+                                                                    "", index);
+                                                            // cityList[index]['fromText'] = "${airport.code},${airport.city}";
+                                                            // cityList[index]["from"] = "${airport.code}";
+                                                          });
                                                         },
-                                                      )
-                                                    : Center(
-                                                        child: Text("No airports found"),
-                                                      ),
+                                                        title:
+                                                            Text(airport.name),
+                                                        subtitle:
+                                                            Text(airport.city),
+                                                      );
+                                                    },
+                                                  )
+                                                : Center(
+                                                    child: Text(
+                                                        "No airports found"),
+                                                  ),
                                           );
                                   },
                                 ),
@@ -286,15 +333,21 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                                     SizedBox(
                                       width: w * 0.75,
                                       child: CustomTextField(
-                                          icon: toControllers[index].text.isEmpty ? SizedBox.shrink() : Icon(Icons.close_rounded),
+                                          icon:
+                                              toControllers[index].text.isEmpty
+                                                  ? SizedBox.shrink()
+                                                  : Icon(Icons.close_rounded),
                                           onTap: () {
                                             toControllers[index].clear();
                                           },
-                                          textEditingController: toControllers[index],
+                                          textEditingController:
+                                              toControllers[index],
                                           hintText: 'Search City',
                                           labelText: 'To',
                                           onChanged: (val) {
-                                            searchController.fetchMulticitySearch2(val!.trim(), index);
+                                            searchController
+                                                .fetchMulticitySearch2(
+                                                    val!.trim(), index);
                                           },
                                           validator: (inputValue) {
                                             if (inputValue!.isEmpty) {
@@ -309,48 +362,78 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                                 Obx(
                                   () {
                                     // ignore: unrelated_type_equality_checks
-                                    return searchController.mySearch2.value[index] == ""
+                                    return searchController
+                                                .mySearch2.value[index] ==
+                                            ""
                                         ? Container()
                                         : Container(
                                             height: 250,
                                             margin: EdgeInsets.only(left: 20),
-                                            decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(15)),
-                                            child:
-                                                searchController.searchModel.value.airports != null && searchController.searchModel.value.airports!.isNotEmpty
-                                                    ? ListView.builder(
-                                                        itemCount: searchController.searchModel.value.airports!.length,
-                                                        itemBuilder: (context, ind) {
-                                                          final airport = searchController.searchModel.value.airports![ind];
-                                                          return ListTile(
-                                                            onTap: () {
-                                                              setState(() {
-                                                                toControllers[index].text = "${airport.code},${airport.city}";
-                                                                toCode = airport.code.toString();
-                                                                // toCity = airport.city
-                                                                //     .toString();
-                                                                // toCountry = airport
-                                                                //     .country
-                                                                //     .toString();
-                                                                searchController.fetchMulticitySearch2("", index);
+                                            decoration: BoxDecoration(
+                                                color: Colors.black12,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: searchController.searchModel
+                                                            .value.airports !=
+                                                        null &&
+                                                    searchController
+                                                        .searchModel
+                                                        .value
+                                                        .airports!
+                                                        .isNotEmpty
+                                                ? ListView.builder(
+                                                    itemCount: searchController
+                                                        .searchModel
+                                                        .value
+                                                        .airports!
+                                                        .length,
+                                                    itemBuilder:
+                                                        (context, ind) {
+                                                      final airport =
+                                                          searchController
+                                                              .searchModel
+                                                              .value
+                                                              .airports![ind];
+                                                      return ListTile(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            toControllers[index]
+                                                                    .text =
+                                                                "${airport.code},${airport.city}";
+                                                            toCode = airport
+                                                                .code
+                                                                .toString();
+                                                            // toCity = airport.city
+                                                            //     .toString();
+                                                            // toCountry = airport
+                                                            //     .country
+                                                            //     .toString();
+                                                            searchController
+                                                                .fetchMulticitySearch2(
+                                                                    "", index);
 
-                                                                // cityList[ind]["toText"] = "${airport.code},${airport.city}";
-                                                                // cityList[index]["to"] = "${airport.code}";
-                                                              });
-                                                            },
-                                                            title: Text(airport.name),
-                                                            subtitle: Text(airport.city),
-                                                          );
+                                                            // cityList[ind]["toText"] = "${airport.code},${airport.city}";
+                                                            // cityList[index]["to"] = "${airport.code}";
+                                                          });
                                                         },
-                                                      )
-                                                    : Center(
-                                                        child: Text("No airports found"),
-                                                      ),
+                                                        title:
+                                                            Text(airport.name),
+                                                        subtitle:
+                                                            Text(airport.city),
+                                                      );
+                                                    },
+                                                  )
+                                                : Center(
+                                                    child: Text(
+                                                        "No airports found"),
+                                                  ),
                                           );
                                   },
                                 ),
                                 0.02.ph,
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       onTap: () {
@@ -359,7 +442,8 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                                       child: FlightTimeWidget(
                                           type: 'DEPARTURE',
                                           // date: '$departDate',
-                                          date: cityList[index]['date'].toString()),
+                                          date: cityList[index]['date']
+                                              .toString()),
                                     ),
                                   ],
                                 ),
@@ -847,16 +931,22 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
                     isExpanded: true,
                     icon: Icon(Icons.arrow_drop_down),
                     value: selectedCabin,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 22.0),
                     items: cabinList.map((String item) {
-                      return DropdownMenuItem(value: item, child: CommonText(text: item));
+                      return DropdownMenuItem(
+                          value: item, child: CommonText(text: item));
                     }).toList(),
                     onChanged: (String? val) {
                       setState(() => selectedCabin = val!);
                     }),
               ),
               0.04.ph,
-              CustomButton(height: 40, width: w, text: 'Search Flight', onPress: () => onPressSubmit()),
+              CustomButton(
+                  height: 40,
+                  width: w,
+                  text: 'Search Flight',
+                  onPress: () => onPressSubmit()),
               0.04.ph,
             ],
           ),
@@ -865,13 +955,15 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
       floatingActionButton: FloatingActionButton.extended(
         heroTag: "float",
         isExtended: true,
-        label: CommonText(text: 'Add', color: Colors.white, weight: FontWeight.w500),
+        label: CommonText(
+            text: 'Add', color: Colors.white, weight: FontWeight.w500),
         backgroundColor: AppColors.appColorPrimary,
         tooltip: 'Add Cities',
         onPressed: () {
           _addMore();
         },
-        shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        shape:
+            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(40)),
         icon: Icon(Icons.add, color: Colors.white, size: 28),
       ),
     );
@@ -888,13 +980,21 @@ class _MulticityFlightScreenState extends State<MulticityFlightScreen> {
   void _addMore() {
     if (cityList.length < 5) {
       setState(() {
-        cityList.add({"from": "Search City", "to": "Search City", "date": "Select Date"});
+        cityList.add({
+          "from": "Search City",
+          "to": "Search City",
+          "date": "Select Date"
+        });
         _addToTextField(cityList.length);
         _addFromTextField(cityList.length);
         print(toControllers.toString());
       });
     } else {
-      Get.showSnackbar(gradientSnackbar("Limit reached", "You can only add up to 5 visits", AppColors.appColorGrey, Icons.warning_amber_rounded));
+      Get.showSnackbar(gradientSnackbar(
+          "Limit reached",
+          "You can only add up to 5 visits",
+          AppColors.appColorGrey,
+          Icons.warning_amber_rounded));
     }
   }
 

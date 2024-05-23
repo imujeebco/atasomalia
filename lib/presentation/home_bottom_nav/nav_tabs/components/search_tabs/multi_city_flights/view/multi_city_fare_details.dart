@@ -11,7 +11,9 @@ import 'package:travel_app/app/utils/custom_widgets/custom_appbar.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_button.dart';
 import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_city_flights/controller/multi_city_fare_rule_controller.dart';
 
+import '../../../../../../../app/utils/custom_widgets/custom_outline_button.dart';
 import '../../../../../model/flight_quote_model.dart';
+import 'multi_city_passenger_details_screen.dart';
 
 // ignore: must_be_immutable
 class MultiCItyFareDetailsScreen extends StatefulWidget {
@@ -128,103 +130,192 @@ class _MultiCItyFareDetailsScreenState
       appBar: CustomAppBar(
         title: 'Flight Details',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // ---------------------------
-            // Text(widget.flightID.toString()),
-            // Text(widget.searchID.toString()),
-            Obx(() {
-              if (flightFareRuleController.isLoading.value) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                if (flightFareRuleController
-                    .multiCityFlightFareRuleModel.value.flights!.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.warning_rounded,
-                          size: 88,
-                          color: Colors.grey,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // ---------------------------
+                // Text(widget.flightID.toString()),
+                // Text(widget.searchID.toString()),
+                Obx(() {
+                  if (flightFareRuleController.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (flightFareRuleController
+                        .multiCityFlightFareRuleModel.value.flights!.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.warning_rounded,
+                              size: 88,
+                              color: Colors.grey,
+                            ),
+                            Text("No Data Found",
+                                style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold))
+                          ],
                         ),
-                        Text("No Data Found",
-                            style: const TextStyle(
-                                color: Colors.black54,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold))
-                      ],
-                    ),
-                  );
-                } else {
-                  var data1 = flightFareRuleController
-                      .multiCityFlightFareRuleModel.value.flights;
-                  return Expanded(
-                      child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: data1?.length,
-                          itemBuilder: (context, index) {
-                            // Map<String, dynamic> item =
-                            //     data1![index] as Map<String, dynamic>;
-                            return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  FlightPackageWidget(
-                                    name: 'Saver',
-                                    item: data1,
-                                    /*
-                                traveller: widget.traveller,
-                                cabinClass: widget.cabinClass,
-                                charges: data1[index]!.totalAmount,
-                                tax: data1[index]!.taxesAmount,
-                                searchID: widget.searchID,
-                                flightID: widget.flightID,
-                                departFlight: widget.departFlight,
-                                arriveFlight: widget.arriveFlight,
-                                departFromDate1: widget.departFromDate1,
-                                departFromTime1: widget.departFromTime1,
-                                departFromCode1: widget.departFromCode1,
-                                departFromDate2: widget.departFromDate2,
-                                departFromTime2: widget.departFromTime2,
-                                departFromCode2: widget.departFromCode2,
-                                arriveToDate1: widget.arriveToDate1,
-                                arriveToTime1: widget.arriveToTime1,
-                                arriveToCode1: widget.arriveToCode1,
-                                arriveToDate2: widget.arriveToDate2,
-                                arriveToCode2: widget.arriveToCode2,
-                                arriveToTime2: widget.arriveToTime2,
-                                adultCount: widget.adultCount,
-                                childCount: widget.childCount,
-                                infantCount: widget.infantCount,
-                                */
+                      );
+                    } else {
+                      var data1 = flightFareRuleController
+                          .multiCityFlightFareRuleModel.value.flights;
+                      return Expanded(
+                          child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: data1?.length,
+                              itemBuilder: (context, index) {
+                                var item = data1![index];
+                                // Map<String, dynamic> item =
+                                //     data1![index] as Map<String, dynamic>;
+                                return Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      FlightPackageWidget(
+                                        name: 'Saver',
+                                        total: item?.totalAmount,
+                                        tax: item?.taxesAmount,
+                                        ticket: item?.ticketAmount,
+                                        /*
+                                    traveller: widget.traveller,
+                                    cabinClass: widget.cabinClass,
+                                    charges: data1[index]!.totalAmount,
+                                    tax: data1[index]!.taxesAmount,
+                                    searchID: widget.searchID,
+                                    flightID: widget.flightID,
+                                    departFlight: widget.departFlight,
+                                    arriveFlight: widget.arriveFlight,
+                                    departFromDate1: widget.departFromDate1,
+                                    departFromTime1: widget.departFromTime1,
+                                    departFromCode1: widget.departFromCode1,
+                                    departFromDate2: widget.departFromDate2,
+                                    departFromTime2: widget.departFromTime2,
+                                    departFromCode2: widget.departFromCode2,
+                                    arriveToDate1: widget.arriveToDate1,
+                                    arriveToTime1: widget.arriveToTime1,
+                                    arriveToCode1: widget.arriveToCode1,
+                                    arriveToDate2: widget.arriveToDate2,
+                                    arriveToCode2: widget.arriveToCode2,
+                                    arriveToTime2: widget.arriveToTime2,
+                                    adultCount: widget.adultCount,
+                                    childCount: widget.childCount,
+                                    infantCount: widget.infantCount,
+                                    */
 
-                                    child1age: widget.child1age ?? 1,
-                                    child2age: widget.child2age ?? 1,
-                                    child3age: widget.child3age ?? 1,
-                                    child4age: widget.child4age ?? 1,
-                                    //
-                                    infant1age: widget.infant1age ?? 1,
-                                    infant2age: widget.infant2age ?? 1,
-                                    infant3age: widget.infant3age ?? 1,
-                                    infant4age: widget.infant4age ?? 1,
-                                    //
-                                  ),
-                                ]);
-                          }));
-                }
-              }
-            }),
-            // FlightPackageWidget(name: 'Saver',),
-          ],
-        ),
+                                        child1age: widget.child1age ?? 1,
+                                        child2age: widget.child2age ?? 1,
+                                        child3age: widget.child3age ?? 1,
+                                        child4age: widget.child4age ?? 1,
+                                        //
+                                        infant1age: widget.infant1age ?? 1,
+                                        infant2age: widget.infant2age ?? 1,
+                                        infant3age: widget.infant3age ?? 1,
+                                        infant4age: widget.infant4age ?? 1,
+                                        //
+                                      ),
+                                    ]);
+                              }));
+                    }
+                  }
+                }),
+                // FlightPackageWidget(name: 'Saver',),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 1,
+            child: Container(
+              color: Colors.white70,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CustomOutlineButton(
+                        color: Colors.white,
+                        width: 150,
+                        text: "Cancel",
+                        onPress: () {
+                          Get.back();
+                        }),
+                    SizedBox(width: 15),
+                    CustomButton(
+                      width: 150,
+                      text: "Next",
+                      onPress: () {
+                        var flightFareDetailsList = [];
+                        flightFareRuleController
+                            .multiCityFlightFareRuleModel.value.flights!
+                            .forEach((elem) {
+                          flightFareDetailsList.add({
+                            'ticketAmount': elem?.ticketAmount,
+                            'taxAmount': elem?.taxesAmount,
+                            'totalAmount': elem?.totalAmount,
+                          });
+                        });
+                        Get.to(() => MultiCityPassengerDetailsScreen(
+                              cityList: widget.cityList,
+                              flightsMap: widget.flightsMap,
+                              flightFareDetailsList: flightFareDetailsList,
+                              /*
+                              fare: widget.charges.toStringAsFixed(2),
+                              tax: widget.tax.toStringAsFixed(2),
+                              total: total.toStringAsFixed(2),
+                              traveller: widget.traveller,
+                              cabinClass: widget.cabinClass,
+                              searchID: widget.searchID,
+                              flightID: widget.flightID,
+                              departFlight: widget.departFlight,
+                              arriveFlight: widget.arriveFlight,
+                              departFromDate1: widget.departFromDate1,
+                              departFromTime1: widget.departFromTime1,
+                              departFromCode1: widget.departFromCode1,
+                              departFromDate2: widget.departFromDate2,
+                              departFromTime2: widget.departFromTime2,
+                              departFromCode2: widget.departFromCode2,
+                              arriveToDate1: widget.arriveToDate1,
+                              arriveToTime1: widget.arriveToTime1,
+                              arriveToCode1: widget.arriveToCode1,
+                              arriveToDate2: widget.arriveToDate2,
+                              arriveToCode2: widget.arriveToCode2,
+                              arriveToTime2: widget.arriveToTime2,
+                              paymentID: '',
+                              adultCount: widget.adultCount,
+                              childCount: widget.childCount,
+                              infantCount: widget.infantCount,
+                              */
+                              //
+                              child1age: widget.child1age,
+                              child2age: widget.child2age,
+                              child3age: widget.child3age,
+                              child4age: widget.child4age,
+                              //
+                              infant1age: widget.infant1age,
+                              infant2age: widget.infant2age,
+                              infant3age: widget.infant3age,
+                              infant4age: widget.infant4age,
+                              //
+                            ));
+                      },
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -235,9 +326,10 @@ class _MultiCItyFareDetailsScreenState
 // ignore: must_be_immutable
 class FlightPackageWidget extends StatefulWidget {
   String name;
-  dynamic charges = 1;
-  dynamic tax = 1;
-  List<dynamic>? item;
+  dynamic ticket = 0;
+  dynamic tax = 0;
+  dynamic total = 0;
+  // Map<String, dynamic> item;
   /*
   String searchID;
   String flightID;
@@ -277,9 +369,10 @@ class FlightPackageWidget extends StatefulWidget {
 
   FlightPackageWidget({
     required this.name,
-    this.charges,
+    this.ticket,
     this.tax,
-    required this.item,
+    this.total,
+    // required this.item,
     /*
     required this.traveller,
     required this.adultCount,
@@ -339,7 +432,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int total = widget.item?[0].ticketAmount + widget.item?[0].taxesAmount;
+    // int total = widget.item?.ticketAmount + widget.item?.taxesAmount;
 
     return DottedBorder(
       dashPattern: [10, 8],
@@ -507,8 +600,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text:
-                      '\$${widget.item?[0].ticketAmount.toStringAsFixed(2) ?? 1}',
+                  text: '\$${widget.ticket.toStringAsFixed(2) ?? 1}',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -526,8 +618,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text:
-                      '\$${widget.item?[0].taxesAmount.toStringAsFixed(2) ?? 1}',
+                  text: '\$${widget.tax.toStringAsFixed(2) ?? 1}',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -545,7 +636,7 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonText(
-                  text: '\$${total.toStringAsFixed(2)}',
+                  text: '\$${widget.total.toStringAsFixed(2) ?? '-'}',
                   fontSize: 11,
                   weight: FontWeight.w600,
                 ),
@@ -559,87 +650,6 @@ class _FlightPackageWidgetState extends State<FlightPackageWidget> {
             Divider(),
             0.02.ph,
 // -----------------------------------------------------
-
-            CustomButton(
-                height: 35,
-                width: w,
-                // text: 'Avail this Flight for \$${total.toStringAsFixed(2)}',
-                text: "Book",
-                onPress: () {
-                  /*
-                  // Get.to(() => PaymentMethodScreen(
-                  dataController.myLoggedIn.value
-                      ? Get.to(() => PassengerDetailsScreen(
-                            fare: widget.charges.toStringAsFixed(2),
-                            tax: widget.tax.toStringAsFixed(2),
-                            total: total.toStringAsFixed(2),
-                            /*
-                            traveller: widget.traveller,
-                            cabinClass: widget.cabinClass,
-                            searchID: widget.searchID,
-                            flightID: widget.flightID,
-                            departFlight: widget.departFlight,
-                            arriveFlight: widget.arriveFlight,
-                            departFromDate1: widget.departFromDate1,
-                            departFromTime1: widget.departFromTime1,
-                            departFromCode1: widget.departFromCode1,
-                            departFromDate2: widget.departFromDate2,
-                            departFromTime2: widget.departFromTime2,
-                            departFromCode2: widget.departFromCode2,
-                            arriveToDate1: widget.arriveToDate1,
-                            arriveToTime1: widget.arriveToTime1,
-                            arriveToCode1: widget.arriveToCode1,
-                            arriveToDate2: widget.arriveToDate2,
-                            arriveToCode2: widget.arriveToCode2,
-                            arriveToTime2: widget.arriveToTime2,
-                            
-                            paymentID: '',
-                            adultCount: widget.adultCount,
-                            childCount: widget.childCount,
-                            infantCount: widget.infantCount,
-                            */
-                            //
-                            child1age: widget.child1age,
-                            child2age: widget.child2age,
-                            child3age: widget.child3age,
-                            child4age: widget.child4age,
-                            //
-                            infant1age: widget.infant1age,
-                            infant2age: widget.infant2age,
-                            infant3age: widget.infant3age,
-                            infant4age: widget.infant4age,
-                            //
-                          ))
-                      : Dialogs.showCustomAlertDialog(context, "Please Login\n\nLogin required for flight booking", () {
-                          Get.offAll(() => LoginScreen());
-                        }, () {
-                          Get.back();
-                        });
-                  // Get.to(() => PassengerDetailsScreen(
-                  //       fare: widget.charges.toString(),
-                  //       tax: widget.tax.toString(),
-                  //       total: total.toStringAsFixed(2),
-                  //       traveller: widget.traveller,
-                  //       cabinClass: widget.cabinClass,
-                  //       searchID: widget.searchID,
-                  //       flightID: widget.flightID,
-                  //       departFlight: widget.departFlight,
-                  //       arriveFlight: widget.arriveFlight,
-                  //       departFromDate1: widget.departFromDate1,
-                  //       departFromTime1: widget.departFromTime1,
-                  //       departFromCode1: widget.departFromCode1,
-                  //       departFromDate2: widget.departFromDate2,
-                  //       departFromTime2: widget.departFromTime2,
-                  //       departFromCode2: widget.departFromCode2,
-                  //       arriveToDate1: widget.arriveToDate1,
-                  //       arriveToTime1: widget.arriveToTime1,
-                  //       arriveToCode1: widget.arriveToCode1,
-                  //       arriveToDate2: widget.arriveToDate2,
-                  //       arriveToCode2: widget.arriveToCode2,
-                  //       arriveToTime2: widget.arriveToTime2,
-                  //     ));
-                  */
-                }),
           ],
         ),
       ),
