@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, camel_case_types
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -344,32 +344,62 @@ class _BookingScreenState extends State<BookingScreen> {
               )
             : Padding(
                 padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 80,
-                      child: Image(image: AssetImage("assets/icons/login.png")),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomButton(
-                            height: 40,
-                            width: 240,
-                            text: 'Login',
-                            onPress: () {
-                              Get.offAll(() => LoginScreen());
-                            }),
-                      ],
-                    )
-                  ],
-                ),
+                child: GotoLoginWidget(),
               ));
+  }
+}
+
+class GotoLoginWidget extends StatelessWidget {
+  const GotoLoginWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          // height: 140,
+          width: 160,
+          child: Image(
+            image: AssetImage("assets/icons/logo.png"),
+            fit: BoxFit.contain,
+          ),
+        ),
+        SizedBox(height: 20),
+        CommonText(
+          text: "Start Your Journey",
+          weight: FontWeight.w500,
+          fontSize: 18,
+        ),
+        SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: CommonText(
+              text:
+                  "You will find great deals with reasonable fares for your desired destinations with ATA",
+              weight: FontWeight.w300,
+              textAlign: TextAlign.center,
+              fontSize: 15),
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomButton(
+                height: 40,
+                width: 240,
+                text: 'Login',
+                onPress: () {
+                  Get.offAll(() => LoginScreen());
+                }),
+          ],
+        )
+      ],
+    );
   }
 }
 

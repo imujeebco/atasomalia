@@ -10,6 +10,7 @@ import 'package:travel_app/presentation/profile/model/user_profile_model.dart';
 import '../../../app/configs/app_size_config.dart';
 import '../../../app/data/data_controller.dart';
 import '../../../app/utils/custom_widgets/custom_button.dart';
+import '../../booking_history/view/my_bookings_screen.dart';
 import 'update_profile_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -184,31 +185,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               })
             : Padding(
                 padding: EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 80,
-                      width: 80,
-                      child: Image(image: AssetImage("assets/icons/login.png")),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomButton(
-                            height: 40,
-                            width: 240,
-                            text: 'Login',
-                            onPress: () {
-                              Get.offAll(() => LoginScreen());
-                            }),
-                      ],
-                    )
-                  ],
-                ),
+                child: GotoLoginWidget(),
               ));
   }
 }

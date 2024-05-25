@@ -15,6 +15,7 @@ import 'package:travel_app/app/utils/custom_widgets/custom_textfield.dart';
 import 'package:travel_app/app/utils/custom_widgets/custom_textfield_required.dart';
 import 'package:travel_app/presentation/booking_history/view/my_bookings_screen.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:travel_app/presentation/home_bottom_nav/nav_tabs/components/search_tabs/multi_city_flights/view/multi_city_payment_method.dart';
 import 'package:travel_app/presentation/home_bottom_nav/views/payment_method.dart';
 
 import '../../../../../../../app/configs/app_colors.dart';
@@ -497,12 +498,13 @@ class _MultiCityPassengerDetailsScreenState
       appBar: CustomAppBar(
         title: 'Passenger Details',
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-            child: Form(
-              key: _formkey,
+      body: Form(
+        key: _formkey,
+        child: ListView(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -859,6 +861,37 @@ class _MultiCityPassengerDetailsScreenState
                   Divider(
                     thickness: 2,
                   ),
+                  /*
+                  widget.cityList[0]['Adults'] > 1
+                      ? ListView.builder(
+                          itemCount: widget.cityList[0]['Adults'] - 1,
+                          itemBuilder: (context, index) {
+                            var indexCount = index + 2;
+                            return passengerForm(
+                                context,
+                                "Adult #$indexCount",
+                                "adult$indexCount",
+                                adult2Controller,
+                                adult2surnameController,
+                                adult2yearController,
+                                adult2natController,
+                                adult2passController,
+                                adult2passExpController,
+                                DateTime.now().year);
+                          },
+                        )
+                      : const SizedBox.shrink(),
+              
+                  // Children List -----------------
+                  widget.cityList[0]['Children'] > 0
+                      ? ListView.builder(
+                          itemCount: widget.cityList[0]['Children'],
+                          itemBuilder: (context, index) {},
+                        )
+                      : const SizedBox.shrink(),
+                  // Infant List -----------------
+                  */
+
                   widget.cityList[0]['Children'] != 0 ||
                           widget.cityList[0]['Infants'] != 0 ||
                           widget.cityList[0]['Adults'] > 1
@@ -1058,6 +1091,7 @@ class _MultiCityPassengerDetailsScreenState
                           ],
                         )
                       : Container(),
+
                   0.05.ph,
                   CommonText(
                       text: 'Flight Summary',
@@ -1067,173 +1101,183 @@ class _MultiCityPassengerDetailsScreenState
                 ],
               ),
             ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: widget.cityList.length,
-            itemBuilder: (context, index) {
-              var cityObj = widget.cityList[index];
-              var fareObj = widget.flightFareDetailsList[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: FlightSummary(
-                  cityObj: cityObj,
-                  flightsMap: widget.flightsMap,
-                  fareObj: fareObj,
-                  // fare: widget.fare,
-                  // tax: widget.tax,
-                  // total: widget.total,
-                  // traveller: widget.traveller,
-                  // cabinClass: widget.cabinClass,
-                  // searchID: widget.searchID,
-                  // flightID: widget.flightID,
-                  // departFlight: widget.departFlight,
-                  // arriveFlight: widget.arriveFlight,
-                  // departFromDate1: widget.departFromDate1,
-                  // departFromTime1: widget.departFromTime1,
-                  // departFromCode1: widget.departFromCode1,
-                  // departFromDate2: widget.departFromDate2,
-                  // departFromTime2: widget.departFromTime2,
-                  // departFromCode2: widget.departFromCode2,
-                  // arriveToDate1: widget.arriveToDate1,
-                  // arriveToTime1: widget.arriveToTime1,
-                  // arriveToCode1: widget.arriveToCode1,
-                  // arriveToDate2: widget.arriveToDate2,
-                  // arriveToCode2: widget.arriveToCode2,
-                  // arriveToTime2: widget.arriveToTime2,
-                  // adultCount: widget.adultCount,
-                  // childCount: widget.cityList[0]['Children'],
-                  // infantCount: widget.cityList[0]['Infants'],
-                ),
-              );
-            },
-          ),
-          0.03.ph,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CustomOutlineButton(
-                  width: 150,
-                  text: "Back",
-                  onPress: () {
-                    Get.back();
-                  }),
-              CustomButton(
-                  width: 150,
-                  text: "Confirm",
-                  onPress: () {
-                    if (_formkey.currentState!.validate()) {
-                      setState(() {
-                        isValidForm = true;
-                        // Get.to(() => PaymentDetailsScreen(
-                        // Get.to(() => PaymentMethodScreen(
-                        //       title: "${titleMap[_selectedTitle!]}",
-                        //       firstName: firstNameController.text,
-                        //       lastName: lastNameController.text,
-                        //       dob:
-                        //           "${yearController.text}-${_selectedDate.month.toString().padLeft(2, '0')}-${dayController.text}",
-                        //       nationality: nationalityController.text,
-                        //       email: dataController.myEmail.value,
-                        //       passNumber: passportController.text,
-                        //       passExp: passportExpiryController.text,
-                        //       phoneCode: phoneCode,
-                        //       phone: phoneNumber,
-                        //       countryCode: countryCode,
-                        //       fare: widget.fare.toString(),
-                        //       tax: widget.tax.toString(),
-                        //       total: widget.total.toString(),
-                        //       traveller: widget.traveller,
-                        //       cabinClass: widget.cabinClass,
-                        //       searchID: widget.searchID,
-                        //       flightID: widget.flightID,
-                        //       departFlight: widget.departFlight,
-                        //       arriveFlight: widget.arriveFlight,
-                        //       departFromDate1: widget.departFromDate1,
-                        //       departFromTime1: widget.departFromTime1,
-                        //       departFromCode1: widget.departFromCode1,
-                        //       departFromDate2: widget.departFromDate2,
-                        //       departFromTime2: widget.departFromTime2,
-                        //       departFromCode2: widget.departFromCode2,
-                        //       arriveToDate1: widget.arriveToDate1,
-                        //       arriveToTime1: widget.arriveToTime1,
-                        //       arriveToCode1: widget.arriveToCode1,
-                        //       arriveToDate2: widget.arriveToDate2,
-                        //       arriveToCode2: widget.arriveToCode2,
-                        //       arriveToTime2: widget.arriveToTime2,
-                        //       adultCount: widget.adultCount,
-                        //       childCount: widget.cityList[0]['Children'],
-                        //       infantCount: widget.cityList[0]['Infants'],
-                        //       //
-                        //       adult2name: adult2Controller.text,
-                        //       adult2Lname: adult2surnameController.text,
-                        //       adult2dob: adult2yearController.text,
-                        //       adult2pass: adult2passController.text,
-                        //       adult2passExp: adult2passExpController.text,
-                        //       adult3name: adult3Controller.text,
-                        //       adult3Lname: adult3surnameController.text,
-                        //       adult3dob: adult3yearController.text,
-                        //       adult3pass: adult3passController.text,
-                        //       adult3passExp: adult3passExpController.text,
-                        //       adult4name: adult4Controller.text,
-                        //       adult4Lname: adult4surnameController.text,
-                        //       adult4dob: adult4yearController.text,
-                        //       adult4pass: adult4passController.text,
-                        //       adult4passExp: adult4passController.text,
-                        //       //
-                        //       child1name: child1Controller.text,
-                        //       child1Lname: child1surnameController.text,
-                        //       child1dob: child1yearController.text,
-                        //       child1pass: child1passController.text,
-                        //       child1passExp: child1passExpController.text,
-                        //       child2name: child2Controller.text,
-                        //       child2Lname: child2surnameController.text,
-                        //       child2dob: child2yearController.text,
-                        //       child2pass: child2passController.text,
-                        //       child2passExp: child2passExpController.text,
-                        //       child3name: child3Controller.text,
-                        //       child3Lname: child3surnameController.text,
-                        //       child3dob: child3yearController.text,
-                        //       child3pass: child3passController.text,
-                        //       child3passExp: child3passExpController.text,
-                        //       child4name: child4Controller.text,
-                        //       child4Lname: child4surnameController.text,
-                        //       child4dob: child4yearController.text,
-                        //       child4pass: child4passController.text,
-                        //       child4passExp: child4passExpController.text,
-                        //       //
-                        //       infant1name: infant1Controller.text,
-                        //       infant1Lname: infant1surnameController.text,
-                        //       infant1dob: infant1yearController.text,
-                        //       infant1pass: infant1passController.text,
-                        //       infant1passExp: infant1passExpController.text,
-                        //       infant2name: infant2Controller.text,
-                        //       infant2Lname: infant2surnameController.text,
-                        //       infant2dob: infant2yearController.text,
-                        //       infant2pass: infant2passController.text,
-                        //       infant2passExp: infant2passExpController.text,
-                        //       infant3name: infant3Controller.text,
-                        //       infant3Lname: infant3surnameController.text,
-                        //       infant3dob: infant3yearController.text,
-                        //       infant3pass: infant3passController.text,
-                        //       infant3passExp: infant3passExpController.text,
-                        //       infant4name: infant4Controller.text,
-                        //       infant4Lname: infant4surnameController.text,
-                        //       infant4dob: infant4yearController.text,
-                        //       infant4pass: infant4passController.text,
-                        //       infant4passExp: infant4passExpController.text,
-                        //     ));
-                      });
-                    } else {
-                      setState(() {
-                        isValidForm = false;
-                      });
-                    }
-                  }),
-            ],
-          ),
-          0.03.ph,
-        ],
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: widget.cityList.length,
+              itemBuilder: (context, index) {
+                var cityObj = widget.cityList[index];
+                var fareObj = widget.flightFareDetailsList[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: FlightSummary(
+                    cityObj: cityObj,
+                    flightsMap: widget.flightsMap,
+                    fareObj: fareObj,
+                    // fare: widget.fare,
+                    // tax: widget.tax,
+                    // total: widget.total,
+                    // traveller: widget.traveller,
+                    // cabinClass: widget.cabinClass,
+                    // searchID: widget.searchID,
+                    // flightID: widget.flightID,
+                    // departFlight: widget.departFlight,
+                    // arriveFlight: widget.arriveFlight,
+                    // departFromDate1: widget.departFromDate1,
+                    // departFromTime1: widget.departFromTime1,
+                    // departFromCode1: widget.departFromCode1,
+                    // departFromDate2: widget.departFromDate2,
+                    // departFromTime2: widget.departFromTime2,
+                    // departFromCode2: widget.departFromCode2,
+                    // arriveToDate1: widget.arriveToDate1,
+                    // arriveToTime1: widget.arriveToTime1,
+                    // arriveToCode1: widget.arriveToCode1,
+                    // arriveToDate2: widget.arriveToDate2,
+                    // arriveToCode2: widget.arriveToCode2,
+                    // arriveToTime2: widget.arriveToTime2,
+                    // adultCount: widget.adultCount,
+                    // childCount: widget.cityList[0]['Children'],
+                    // infantCount: widget.cityList[0]['Infants'],
+                  ),
+                );
+              },
+            ),
+            0.03.ph,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomOutlineButton(
+                    width: 150,
+                    text: "Back",
+                    onPress: () {
+                      Get.back();
+                    }),
+                CustomButton(
+                    width: 150,
+                    text: "Confirm",
+                    onPress: () {
+                      if (_formkey.currentState!.validate()) {
+                        setState(() {
+                          isValidForm = true;
+                          // Get.to(() => PaymentDetailsScreen(
+                          Get.to(() => MultiCityPaymentMethodScreen(
+                                cityList: widget.cityList,
+                                flightFareDetailsList:
+                                    widget.flightFareDetailsList,
+                                flightsMap: widget.flightsMap,
+                                title: "${titleMap[_selectedTitle!]}",
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
+                                dob:
+                                    "${yearController.text}-${_selectedDate.month.toString().padLeft(2, '0')}-${dayController.text}",
+                                nationality: nationalityController.text,
+                                email: dataController.myEmail.value,
+                                passNumber: passportController.text,
+                                passExp: passportExpiryController.text,
+                                phoneCode: phoneCode,
+                                phone: phoneNumber,
+                                countryCode: countryCode,
+                                /*
+                                fare: widget.flightFareDetailsList['ticketAmount']
+                                    .toString(),
+                                tax: widget.flightFareDetailsList['ticketAmount']
+                                    .toString(),
+                                total: widget
+                                    .flightFareDetailsList['ticketAmount']
+                                    .toString(),
+                                traveller: widget.traveller,
+                                cabinClass: widget.cabinClass,
+                                searchID: widget.searchID,
+                                flightID: widget.flightID,
+                                departFlight: widget.departFlight,
+                                arriveFlight: widget.arriveFlight,
+                                departFromDate1: widget.departFromDate1,
+                                departFromTime1: widget.departFromTime1,
+                                departFromCode1: widget.departFromCode1,
+                                departFromDate2: widget.departFromDate2,
+                                departFromTime2: widget.departFromTime2,
+                                departFromCode2: widget.departFromCode2,
+                                arriveToDate1: widget.arriveToDate1,
+                                arriveToTime1: widget.arriveToTime1,
+                                arriveToCode1: widget.arriveToCode1,
+                                arriveToDate2: widget.arriveToDate2,
+                                arriveToCode2: widget.arriveToCode2,
+                                arriveToTime2: widget.arriveToTime2,
+                                adultCount: widget.adultCount,
+                                childCount: widget.cityList[0]['Children'],
+                                infantCount: widget.cityList[0]['Infants'],
+                                */
+                                //
+                                adult2name: adult2Controller.text,
+                                adult2Lname: adult2surnameController.text,
+                                adult2dob: adult2yearController.text,
+                                adult2pass: adult2passController.text,
+                                adult2passExp: adult2passExpController.text,
+                                adult3name: adult3Controller.text,
+                                adult3Lname: adult3surnameController.text,
+                                adult3dob: adult3yearController.text,
+                                adult3pass: adult3passController.text,
+                                adult3passExp: adult3passExpController.text,
+                                adult4name: adult4Controller.text,
+                                adult4Lname: adult4surnameController.text,
+                                adult4dob: adult4yearController.text,
+                                adult4pass: adult4passController.text,
+                                adult4passExp: adult4passController.text,
+                                //
+                                child1name: child1Controller.text,
+                                child1Lname: child1surnameController.text,
+                                child1dob: child1yearController.text,
+                                child1pass: child1passController.text,
+                                child1passExp: child1passExpController.text,
+                                child2name: child2Controller.text,
+                                child2Lname: child2surnameController.text,
+                                child2dob: child2yearController.text,
+                                child2pass: child2passController.text,
+                                child2passExp: child2passExpController.text,
+                                child3name: child3Controller.text,
+                                child3Lname: child3surnameController.text,
+                                child3dob: child3yearController.text,
+                                child3pass: child3passController.text,
+                                child3passExp: child3passExpController.text,
+                                child4name: child4Controller.text,
+                                child4Lname: child4surnameController.text,
+                                child4dob: child4yearController.text,
+                                child4pass: child4passController.text,
+                                child4passExp: child4passExpController.text,
+                                //
+                                infant1name: infant1Controller.text,
+                                infant1Lname: infant1surnameController.text,
+                                infant1dob: infant1yearController.text,
+                                infant1pass: infant1passController.text,
+                                infant1passExp: infant1passExpController.text,
+                                infant2name: infant2Controller.text,
+                                infant2Lname: infant2surnameController.text,
+                                infant2dob: infant2yearController.text,
+                                infant2pass: infant2passController.text,
+                                infant2passExp: infant2passExpController.text,
+                                infant3name: infant3Controller.text,
+                                infant3Lname: infant3surnameController.text,
+                                infant3dob: infant3yearController.text,
+                                infant3pass: infant3passController.text,
+                                infant3passExp: infant3passExpController.text,
+                                infant4name: infant4Controller.text,
+                                infant4Lname: infant4surnameController.text,
+                                infant4dob: infant4yearController.text,
+                                infant4pass: infant4passController.text,
+                                infant4passExp: infant4passExpController.text,
+                              ));
+                        });
+                      } else {
+                        setState(() {
+                          isValidForm = false;
+                        });
+                      }
+                    }),
+              ],
+            ),
+            0.03.ph,
+          ],
+        ),
       ),
     );
   }
