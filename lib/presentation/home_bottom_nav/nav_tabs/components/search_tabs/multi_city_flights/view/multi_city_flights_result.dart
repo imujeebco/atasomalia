@@ -73,14 +73,11 @@ class MulticitySearchFlightScreen extends StatefulWidget {
   });
 
   @override
-  State<MulticitySearchFlightScreen> createState() =>
-      _MulticitySearchFlightScreenState();
+  State<MulticitySearchFlightScreen> createState() => _MulticitySearchFlightScreenState();
 }
 
-class _MulticitySearchFlightScreenState
-    extends State<MulticitySearchFlightScreen> {
-  final MulticityFlightQuoteController multiCityFlightQuoteController =
-      Get.put(MulticityFlightQuoteController());
+class _MulticitySearchFlightScreenState extends State<MulticitySearchFlightScreen> {
+  final MulticityFlightQuoteController multiCityFlightQuoteController = Get.put(MulticityFlightQuoteController());
   String? filterName = "a";
   String selectedSortOption = '';
   List<String> airlineNames = [];
@@ -142,8 +139,7 @@ class _MulticitySearchFlightScreenState
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     var eachReponse;
     widget.cityList.forEach((elem) async {
-      eachReponse =
-          await multiCityFlightQuoteController.multicityFlightQuote(elem);
+      eachReponse = await multiCityFlightQuoteController.multicityFlightQuote(elem);
       multiCityFlightQuoteController.responseList.value.add(eachReponse);
     });
     // });
@@ -174,8 +170,7 @@ class _MulticitySearchFlightScreenState
                     child: CircularProgressIndicator(),
                   );
                 } else {
-                  if (multiCityFlightQuoteController
-                      .responseList.value.isEmpty) {
+                  if (multiCityFlightQuoteController.responseList.value.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -185,17 +180,12 @@ class _MulticitySearchFlightScreenState
                             size: 88,
                             color: Colors.grey,
                           ),
-                          Text("No flights available",
-                              style: const TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold))
+                          Text("No flights available", style: const TextStyle(color: Colors.black54, fontSize: 24, fontWeight: FontWeight.bold))
                         ],
                       ),
                     );
                   } else {
-                    var respList =
-                        multiCityFlightQuoteController.responseList.value;
+                    var respList = multiCityFlightQuoteController.responseList.value;
                     // var data1 = multiCityFlightQuoteController.oneWayflightQuoteModel.value.flights;
                     // var searchData = multiCityFlightQuoteController.oneWayflightQuoteModel.value;
                     // setRadioButtons(respList.length);
@@ -446,7 +436,7 @@ class _MulticitySearchFlightScreenState
                           //   ],
                           // ),
                           // SizedBox(height: 10),
-                          CommonText(text: selectedRadioList.toString()),
+                          // CommonText(text: selectedRadioList.toString()),
                           Expanded(
                             child: ListView.builder(
                               shrinkWrap: true,
@@ -456,27 +446,18 @@ class _MulticitySearchFlightScreenState
 
                                 return grp!.flights!.isNotEmpty
                                     ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: [
                                               CommonText(
-                                                  text:
-                                                      "${grp.departureCity.toString()} to ${grp.arrivalCity}",
+                                                  text: "${grp.departureCity.toString()} to ${grp.arrivalCity}",
                                                   fontSize: 18,
-                                                  weight: AppFontWeights
-                                                      .appTextFontWeightMedium),
+                                                  weight: AppFontWeights.appTextFontWeightMedium),
                                               CommonText(
-                                                  text:
-                                                      "${grp.departureDate?.substring(0, 10)}",
-                                                  fontSize: 14,
-                                                  weight: AppFontWeights
-                                                      .appTextFontWeightMedium),
+                                                  text: "${grp.departureDate?.substring(0, 10)}", fontSize: 14, weight: AppFontWeights.appTextFontWeightMedium),
                                             ],
                                           ),
                                           0.01.ph,
@@ -484,12 +465,10 @@ class _MulticitySearchFlightScreenState
                                             key: ValueKey(grpInd),
                                             padding: EdgeInsets.all(10),
                                             shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
+                                            physics: const NeverScrollableScrollPhysics(),
                                             itemCount: grp.flights?.length,
                                             itemBuilder: (context, index) {
-                                              var eachFlight =
-                                                  grp.flights?[index];
+                                              var eachFlight = grp.flights?[index];
                                               // int? _selectedFlight;
 
                                               // bool isFiltered = data1[grpInd].outBound?.segments![0].airlineName!.contains("$filterName");
@@ -505,54 +484,33 @@ class _MulticitySearchFlightScreenState
                                               // return isFiltered
                                               //     ?
                                               return Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   DottedBorder(
                                                       dashPattern: [10, 8],
                                                       strokeWidth: 1,
-                                                      color: AppColors
-                                                          .appColorBlack,
+                                                      color: AppColors.appColorBlack,
                                                       child: Container(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                15, 15, 15, 15),
-                                                        margin: EdgeInsets.all(
-                                                            10.0),
+                                                        padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                                                        margin: EdgeInsets.all(10.0),
                                                         child: Column(
                                                           children: [
                                                             PlaneNameWidget(
                                                                 image:
                                                                     "${eachFlight?.outBound?.segments?[0].airlineLogo ?? "https://reservations.siliconsom.com/assets/images/logos/logo_small.png"}",
-                                                                name: eachFlight
-                                                                        ?.outBound
-                                                                        ?.segments?[
-                                                                            0]
-                                                                        .airlineName ??
-                                                                    '---',
-                                                                number: eachFlight
-                                                                    ?.outBound
-                                                                    ?.segments?[
-                                                                        0]
-                                                                    .flightNumber!
-                                                                    .toString()),
+                                                                name: eachFlight?.outBound?.segments?[0].airlineName ?? '---',
+                                                                number: eachFlight?.outBound?.segments?[0].flightNumber!.toString()),
                                                             0.01.ph,
                                                             Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Radio(
-                                                                  visualDensity:
-                                                                      VisualDensity
-                                                                          .compact,
+                                                                  visualDensity: VisualDensity.compact,
                                                                   // toggleable: true,
                                                                   value: index,
-                                                                  groupValue: grpInd ==
-                                                                          0
+                                                                  groupValue: grpInd == 0
                                                                       ? selectedFlight1
-                                                                      : grpInd ==
-                                                                              1
+                                                                      : grpInd == 1
                                                                           ? selectedFlight2
                                                                           : grpInd == 2
                                                                               ? selectedFlight3
@@ -561,14 +519,10 @@ class _MulticitySearchFlightScreenState
                                                                                   : selectedFlight5,
 
                                                                   // groupValue: eachFlight!.id == selectedFlights[grpInd]['FlightId'] ? index : 99,
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(
-                                                                        () {
-                                                                      grpInd ==
-                                                                              0
-                                                                          ? selectedFlight1 =
-                                                                              value
+                                                                  onChanged: (value) {
+                                                                    setState(() {
+                                                                      grpInd == 0
+                                                                          ? selectedFlight1 = value
                                                                           : grpInd == 1
                                                                               ? selectedFlight2 = value
                                                                               : grpInd == 2
@@ -577,65 +531,35 @@ class _MulticitySearchFlightScreenState
                                                                                       ? selectedFlight4 = value
                                                                                       : selectedFlight5 = value;
                                                                       // selectedFlights[grpInd] = {'SearchId': grp.id, 'FlightId': eachFlight!.id};
-                                                                      selectedRadioList[
-                                                                              grpInd] =
-                                                                          value;
+                                                                      selectedRadioList[grpInd] = value;
 
-                                                                      print(
-                                                                          selectedRadioList);
+                                                                      print(selectedRadioList);
                                                                     });
                                                                   },
                                                                 ),
                                                                 FromToFlightWidget(
-                                                                  date: eachFlight
-                                                                          ?.outBound
-                                                                          ?.departureDate ??
-                                                                      "---",
-                                                                  time: eachFlight
-                                                                          ?.outBound
-                                                                          ?.departureTime ??
-                                                                      "---",
-                                                                  city: eachFlight
-                                                                          ?.outBound
-                                                                          ?.segments?[
-                                                                              0]
-                                                                          .departure ??
-                                                                      "---",
+                                                                  date: eachFlight?.outBound?.departureDate ?? "---",
+                                                                  time: eachFlight?.outBound?.departureTime ?? "---",
+                                                                  city: eachFlight?.outBound?.segments?[0].departure ?? "---",
                                                                 ),
                                                                 Column(
                                                                   children: [
                                                                     Icon(
-                                                                      FontAwesomeIcons
-                                                                          .plane,
-                                                                      color: AppColors
-                                                                          .appColorPrimary,
-                                                                      size:
-                                                                          20.0,
+                                                                      FontAwesomeIcons.plane,
+                                                                      color: AppColors.appColorPrimary,
+                                                                      size: 20.0,
                                                                     ),
                                                                     0.01.ph,
                                                                     CommonText(
-                                                                      text:
-                                                                          'Outbound',
-                                                                      fontSize:
-                                                                          12.0,
+                                                                      text: 'Outbound',
+                                                                      fontSize: 12.0,
                                                                     )
                                                                   ],
                                                                 ),
                                                                 FromToFlightWidget(
-                                                                  date: eachFlight
-                                                                          ?.outBound
-                                                                          ?.arrivalDate ??
-                                                                      "---",
-                                                                  time: eachFlight
-                                                                          ?.outBound
-                                                                          ?.arrivalTime ??
-                                                                      "---",
-                                                                  city: eachFlight
-                                                                          ?.outBound
-                                                                          ?.segments?[
-                                                                              0]
-                                                                          .arrival ??
-                                                                      "---",
+                                                                  date: eachFlight?.outBound?.arrivalDate ?? "---",
+                                                                  time: eachFlight?.outBound?.arrivalTime ?? "---",
+                                                                  city: eachFlight?.outBound?.segments?[0].arrival ?? "---",
                                                                 ),
                                                               ],
                                                             ),
@@ -772,8 +696,7 @@ class _MulticitySearchFlightScreenState
                                                                       ));
                                                                       */
                                                                 },
-                                                                text:
-                                                                    "Flights starts from \$ ${eachFlight?.totalAmount.toStringAsFixed(2)}"),
+                                                                text: "Flights starts from \$ ${eachFlight?.totalAmount.toStringAsFixed(2)}"),
                                                           ],
                                                         ),
                                                       )),
@@ -801,8 +724,7 @@ class _MulticitySearchFlightScreenState
                                       )
                                     : Center(
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Icon(
                                               Icons.warning_rounded,
@@ -810,11 +732,7 @@ class _MulticitySearchFlightScreenState
                                               color: Colors.grey,
                                             ),
                                             Text("No flights available",
-                                                style: const TextStyle(
-                                                    color: Colors.black54,
-                                                    fontSize: 24,
-                                                    fontWeight:
-                                                        FontWeight.bold))
+                                                style: const TextStyle(color: Colors.black54, fontSize: 24, fontWeight: FontWeight.bold))
                                           ],
                                         ),
                                       );
@@ -853,33 +771,16 @@ class _MulticitySearchFlightScreenState
                             onPress: () {
                               var fareRulesList = [];
                               var flightsSelectionMap = {};
-                              multiCityFlightQuoteController.responseList.value
-                                  .forEachIndexed((ind, elem) {
-                                fareRulesList.add({
-                                  'searchId': elem!.id,
-                                  'flightId':
-                                      elem.flights![selectedRadioList[ind]!].id
-                                });
+                              multiCityFlightQuoteController.responseList.value.forEachIndexed((ind, elem) {
+                                fareRulesList.add({'searchId': elem!.id, 'flightId': elem.flights![selectedRadioList[ind]!].id});
                                 widget.cityList[ind].addAll({
-                                  "departureTime": elem
-                                      .flights![selectedRadioList[ind]!]
-                                      .outBound
-                                      ?.departureTime,
-                                  "arrivalTime": elem
-                                      .flights![selectedRadioList[ind]!]
-                                      .outBound
-                                      ?.arrivalTime,
-                                  "flightNumber": elem
-                                      .flights![selectedRadioList[ind]!]
-                                      .outBound
-                                      ?.segments?[0]
-                                      .flightNumber,
+                                  "departureTime": elem.flights![selectedRadioList[ind]!].outBound?.departureTime,
+                                  "arrivalTime": elem.flights![selectedRadioList[ind]!].outBound?.arrivalTime,
+                                  "flightNumber": elem.flights![selectedRadioList[ind]!].outBound?.segments?[0].flightNumber,
                                 });
                               });
-                              flightsSelectionMap['flightSelection'] =
-                                  fareRulesList;
-                              print(
-                                  '*********************************************');
+                              flightsSelectionMap['flightSelection'] = fareRulesList;
+                              print('*********************************************');
                               print(flightsSelectionMap);
 
                               Get.to(MultiCItyFareDetailsScreen(
@@ -899,11 +800,7 @@ class _MulticitySearchFlightScreenState
                               ));
                             },
                           )
-                        : CustomOutlineButton(
-                            color: Colors.grey,
-                            width: 150,
-                            text: "Next",
-                            onPress: () {})
+                        : CustomOutlineButton(color: Colors.grey, width: 150, text: "Next", onPress: () {})
                   ],
                 ),
               ),
@@ -979,11 +876,7 @@ class PlaneNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-            height: 30,
-            width: 30,
-            child:
-                Image(image: NetworkImage(image ?? ''), fit: BoxFit.contain)),
+        Container(height: 30, width: 30, child: Image(image: NetworkImage(image ?? ''), fit: BoxFit.contain)),
         CommonText(
           text: name ?? '',
           fontSize: 12.0,
@@ -1015,8 +908,7 @@ class buildButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: onPress,
         style: OutlinedButton.styleFrom(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
         child: Text(text ?? ''),
       ),
